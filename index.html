@@ -4,18 +4,45 @@
 <head> 
 	<meta charset="utf-8">
 
-	<title> Spotify </title> 
+	<title>ArtisTree</title> 
 
-	<!-- Javascript --> 
-	<script src="assets/js/jquery-1.11.3.min.js"></script>
-	<script type="text/javascript" src="js/script.js"></script> 
-	
-
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/handlebars-v4.0.4.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/sp-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/d3.min.js"></script>
+    <script type="text/javascript" src="js/store.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
 </head> 
-
 <body>
-
-
-
+	<div class="container">
+		<div id="search" class="row">
+			<span class="brand col-md-1">ArtisTree</span>
+			<form id="search-artist" class="col-md-9" role="form">
+		      	<input id="search-field" type="text" class="form-control" placeholder="Search for an Artist">
+			</form>
+			<button type="button" class="btn btn-primary btn-sm col-md-2">
+	    		Need help?
+	  		</button>
+		</div>
+		<div class="row">
+			<div class="right pull-right">
+				<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:5Z7ygHQo02SUrFmcgpwsKW,1x6ACsKV4UdWS2FMuPFUiT,4bi73jCM02fMpkI11Lqmfe" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
+			</div>
+			<div id="main" style="border: 1px solid black;">
+				<div id="tree-view"></div>
+				<div id="save">
+	          		<button type="button" class="btn btn-primary btn-sm">
+	    	    		Save this tree
+	          		</button>
+	        	</div>
+	    	</div>
+		</div>
+	</div>
+	<!-- For Handlebars -->
+	<script id="spotify-play-template" type="text/x-handlebars-template">
+		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{title}}:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
+	</script>
 </body>
 
