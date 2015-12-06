@@ -115,9 +115,5 @@ $(document).ready(function() {
 		suggestArtists($('#search-field').val());
 		searchForArtist($('#search-field').val());
 	});
-
-	$('.brand').click(function(){
-		window.location.reload();
-	});
 });
 
