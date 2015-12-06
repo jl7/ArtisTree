@@ -7,3 +7,6 @@
 #search-field {
   display: inline-flex;
 }
+#web_page_title{
+	cursor: pointer;
+}

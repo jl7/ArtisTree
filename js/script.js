@@ -97,4 +97,9 @@ $(document).ready(function() {
 		$('#rightpane').show();
 		$('#main').html(treeViewHTML);
 	});
+
+	$("#web_page_title").click(function(){
+		window.location.reload();
+	});
 });
+
