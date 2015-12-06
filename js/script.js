@@ -33,6 +33,25 @@ $(document).ready(function() {
 
 	init();
 
+	var suggestArtists = function (query) {
+		$.ajax({
+			url: 'http://developer.echonest.com/api/v4/artist/suggest',
+			data: {
+				api_key: ECHO_NEST_API_KEY,
+				results: 15,
+				q: query,
+			},
+			success: function(response) {
+				console.log(response);
+			}
+		});
+	}
+
+	$('#search-artist').submit(function(event) {
+		event.preventDefault();
+		suggestArtists($('#search-field').val());
+	});
+
 	var getArtistImageAndName = function (index, artistId) {
 		$.ajax({
 			url: 'https://api.spotify.com/v1/artists/'+artistId,
