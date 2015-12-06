@@ -1,22 +1,61 @@
-/* 
-Practice with Spotify Web API and Echo Nest API
-
-*/ 
-
-
-
 $(document).ready(function() {
+	var ECHO_NEST_API_KEY = 'PF5AWHKSEDOEJ6IXM';
+	var treeViewHTML = 
+		'<div id="tree-view"></div>' +
+		'<div id="save">' +
+      		'<button type="button" class="btn btn-primary btn-sm">' +
+	    		'Save this tree' +
+      		'</button>' +
+    	'</div>';
 
-	function searchForArtist(artistName) {
+	var getMostPopularArtists = function() {
 		$.ajax({
-			'url' : "https://api.spotify.com/v1/search?q=tania%20bowra&type=artist",
-			'type' : 'GET',
-			'dataType' : 'jsonp', 
+			url: 'http://developer.echonest.com/api/v4/artist/top_hottt',
+			data: {
+				api_key: ECHO_NEST_API_KEY,
+				results: 8,
+				bucket: 'id:spotify',
+				limit: true
+			},
 			success: function(data) {
-				console.log(data); 
+				var topArtists = data.response.artists;
+				for(var i=0, l=topArtists.length; i<l; i++) {
+					getArtistImageAndName(i, topArtists[i].foreign_ids[0].foreign_id.slice(15));
+				}
 			}
-		});//end of ajax call
+		});
+	}
 
+	var init = function() {
+		$('#rightpane').hide();
+		getMostPopularArtists();
+	}
+
+	init();
+
+	var getArtistImageAndName = function (index, artistId) {
+		$.ajax({
+			url: 'https://api.spotify.com/v1/artists/'+artistId,
+			success: function(response) {
+				var name = response.name;
+				$('#'+index).find('img').attr('src', response.images[2].url);
+				$('#'+index).find('img').attr('alt', name);	
+				$('#'+index).find('h3').text(name);
+			}
+		});
+	}
+
+	var searchForArtist = function (artistName) {
+		$.ajax({
+			url : 'https://api.spotify.com/v1/search',
+			data: {
+				q: artistName,
+				type: 'artist'
+			},
+			success: function(response) {
+				console.log(response); 
+			}
+		});
 	}
 
 
@@ -35,4 +74,4 @@ $(document).ready(function() {
 	// 	}); //end of ajax call
 	// }
 
-});  //end of $(document).ready() function
+});
