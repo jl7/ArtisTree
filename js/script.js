@@ -8,6 +8,9 @@ $(document).ready(function() {
       		'</button>' +
     	'</div>';
 
+    var spotifyPlayTemplateSource = $('#spotify-play-template').html();
+    var spotifyPlayTemplate = Handlebars.compile(spotifyPlayTemplateSource);
+
 	var getMostPopularArtists = function() {
 		$.ajax({
 			url: 'http://developer.echonest.com/api/v4/artist/top_hottt',
@@ -40,11 +43,6 @@ $(document).ready(function() {
 		});
 	}
 
-	$('#search-artist').submit(function(event) {
-		event.preventDefault();
-		suggestArtists($('#search-field').val());
-	});
-
 	var getArtistImageAndName = function (index, artistId) {
 		$.ajax({
 			url: 'https://api.spotify.com/v1/artists/'+artistId,
@@ -65,7 +63,20 @@ $(document).ready(function() {
 				type: 'artist'
 			},
 			success: function(response) {
-				console.log(response); 
+				var artist = response.artists.items[0];
+				getTopTracksForArtist(artist.name, artist.id, artist.images[2].url);
+			}
+		});
+	}
+
+	var getTopTracksForArtist = function (artistName, artistId, artistImage) {
+		$.ajax({
+			url : 'https://api.spotify.com/v1/artists/'+artistId+'/top-tracks',
+			data: {
+				country: 'US'
+			},
+			success: function(response) {
+				$('#rightpane').html(spotifyPlayTemplate({name: artistName, url: artistImage, tracks: response.tracks}));
 			}
 		});
 	}
@@ -87,6 +98,7 @@ $(document).ready(function() {
 	}
 
 	var init = function() {
+		$('#rightpane').height($(window).height());
 		$('#rightpane').hide();
 		getMostPopularArtists();
 	}
@@ -94,11 +106,17 @@ $(document).ready(function() {
 	init();
 
 	$('.thumbnail').find('a').click(function() {
-		$('#rightpane').show();
 		$('#main').html(treeViewHTML);
+		$('#rightpane').show();
 	});
 
-	$("#web_page_title").click(function(){
+	$('#search-artist').submit(function(event) {
+		event.preventDefault();
+		suggestArtists($('#search-field').val());
+		searchForArtist($('#search-field').val());
+	});
+
+	$('.brand').click(function(){
 		window.location.reload();
 	});
 });

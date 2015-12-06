@@ -17,8 +17,8 @@
 </head> 
 <body>
 	<div class="container">
-		<div id="search" class="row">
-			<span class="brand col-md-1" id="web_page_title">ArtisTree</span>
+		<div id="search" class="row panel panel-primary">
+			<span class="brand col-md-1">ArtisTree</span>
 			<form id="search-artist" class="col-md-9" role="form">
 		      	<input id="search-field" type="text" class="form-control" placeholder="Search for an Artist">
 			</form>
@@ -28,7 +28,6 @@
 		</div>
 		<div class="row">
 			<div id="rightpane" class="right pull-right">
-				<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:5Z7ygHQo02SUrFmcgpwsKW,1x6ACsKV4UdWS2FMuPFUiT,4bi73jCM02fMpkI11Lqmfe" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
 			</div>
 			<div id="main" class="panel panel-primary">
 				<div class="panel-body">
@@ -123,7 +122,13 @@
 	</div>
 	<!-- For Handlebars -->
 	<script id="spotify-play-template" type="text/x-handlebars-template">
-		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{title}}:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
+		<div class="thumbnail">
+			<img src="{{url}}" alt="{{name}}">
+			<div class="caption">
+				<h4 class="text-center">{{name}}</h4>
+			</div>
+		</div>
+		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{name}} Top Tracks:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
 	</script>
 </body>
 
