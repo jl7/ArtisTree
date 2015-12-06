@@ -26,20 +26,13 @@ $(document).ready(function() {
 		});
 	}
 
-	var init = function() {
-		$('#rightpane').hide();
-		getMostPopularArtists();
-	}
-
-	init();
-
 	var suggestArtists = function (query) {
 		$.ajax({
 			url: 'http://developer.echonest.com/api/v4/artist/suggest',
 			data: {
 				api_key: ECHO_NEST_API_KEY,
 				results: 15,
-				q: query,
+				q: query
 			},
 			success: function(response) {
 				console.log(response);
@@ -77,20 +70,31 @@ $(document).ready(function() {
 		});
 	}
 
+	var getSimilarArtists = function (artistId) {
+		$.ajax({
+			url: 'http://developer.echonest.com/api/v4/artist/similar',
+			data: {
+				api_key: ECHO_NEST_API_KEY,
+				id: 'spotify:artist:'+artistId,
+				results: 5,
+				bucket: 'id:spotify',
+				limit: true
+			},
+			success: function(data) {
+				console.log(data);
+			}
+		});
+	}
 
-	//Get Related Aritists 
-	//GET https://api.spotify.com/v1/artists/{id}/related-artist 
-	// function getRelatedArtists(artist_id){
-	// 	//GET /users/user-id
-	// 	$.ajax({
-	// 		'url' : "https://api.spotify.com/v1/artists/"+artist_id+"/related-artist",
-	// 		'type' : 'GET',	
-	// 		'dataType' : 'jsonp',
-	// 		success: function(data) {
-	// 			console.log(data); 
+	var init = function() {
+		$('#rightpane').hide();
+		getMostPopularArtists();
+	}
 
-	// 		}
-	// 	}); //end of ajax call
-	// }
+	init();
 
+	$('.thumbnail').find('a').click(function() {
+		$('#rightpane').show();
+		$('#main').html(treeViewHTML);
+	});
 });
