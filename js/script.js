@@ -101,5 +101,9 @@ $(document).ready(function() {
 	$("#web_page_title").click(function(){
 		window.location.reload();
 	});
+
+	$("#help_button").click(function(){
+		// if("#rightpane").display
+	});
 });
 
