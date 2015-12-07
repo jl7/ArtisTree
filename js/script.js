@@ -2,8 +2,8 @@ $(document).ready(function() {
 	var ECHO_NEST_API_KEY = 'PF5AWHKSEDOEJ6IXM';
 	var treeViewHTML = 
 		'<div id="tree-view"></div>' +
-		'<div id="save">' +
-      		'<button type="button" class="btn btn-primary btn-sm">' +
+		'<div id="save">' + 
+      		'<button type="button" class="btn btn-primary btn-sm"  data-toggle="popover" data-content="Click here to save the current tree view" data-placement="bottom">' +
 	    		'Save this tree' +
       		'</button>' +
     	'</div>';
@@ -115,5 +115,13 @@ $(document).ready(function() {
 		suggestArtists($('#search-field').val());
 		searchForArtist($('#search-field').val());
 	});
+	$('#help_instruction').click(function() {
+		
+		$(".popup").fadeIn(350);
+		 $("[data-toggle='popover']").popover('show');
+	});
+	$('.popup-inner').click(function() {
+		$(".popup").fadeOut(350);
+		 $("[data-toggle='popover']").popover('hide');
+	});
 });
-

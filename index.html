@@ -18,11 +18,11 @@
 <body>
 	<div class="container">
 		<div id="search" class="row panel panel-primary">
-			<a href="./index.html" class="brand col-md-1">ArtisTree</a>
+			<a href="./index.html" class="brand col-md-1" data-toggle="popover" data-content="Click here to return to Homepage" data-placement="right">ArtisTree</a>
 			<form id="search-artist" class="col-md-9" role="form">
-		      	<input id="search-field" type="text" class="form-control" placeholder="Search for an Artist">
+		      	<input id="search-field" type="text" class="form-control" placeholder="Search for an Artist" data-toggle="popover" data-content="Type and search an artist" data-placement="bottom">
 			</form>
-			<button type="button" class="btn btn-primary btn-sm col-md-2">
+			<button id="help_instruction" type="button" class="btn btn-primary btn-sm col-md-2">
 	    		Need help?
 	  		</button>
 		</div>
@@ -120,6 +120,14 @@
 	    	</div>
 		</div>
 	</div>
+
+
+	<div class="popup" data-popup="popup-3">
+	        <div class="popup-inner">
+	        	Got it!
+	        </div>
+	</div>
+
 	<!-- For Handlebars -->
 	<script id="spotify-play-template" type="text/x-handlebars-template">
 		<div class="thumbnail">
