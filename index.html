@@ -17,20 +17,26 @@
     <script type="text/javascript" src="js/script.js"></script>
 </head> 
 <body>
+	<div class="popup" data-popup="popup-3">
+        <div class="popup-inner">
+        	Got it!
+        </div>
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="page-header">
-				<button type="button" class="btn btn-primary pull-right">
+				<button type="button" class="btn btn-primary pull-right" id="help_instruction">
 		    		Need help?
 		  		</button>
-				<h1>ArtisTree <small>Discover Similar Artists</small></h1>
+	
+				<h3><a href="./index.html" class="brand col-md-1" data-toggle="popover" data-content="Click here to return to Homepage" data-placement="bottom">ArtisTree</a><small>Discover Similar Artists</a></small></h3>
 			</div>
 		</div>
 	
 		<div class="row">
 			<div class="center-div">
 				<div class="dropdown suggest-holder">
-					<input type="text" class="form-control" id="search-artist" placeholder="Search for an Artist">
+					<input type="text" class="form-control" id="search-artist" placeholder="Search for an Artist" data-toggle="popover" data-content="Type and search an artist" data-placement="top">
 					<ul class="dropdown-menu suggest-nav col-md-12"></ul>
 				</div>
 			</div>
@@ -138,7 +144,7 @@
 				</div>
 				<div id="tree-view" class="panel-primary"></div>
 				<div id="save">
-  					<button id="save-tree" type="button" class="btn btn-primary btn-sm">
+  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save the current tree view" data-placement="top">
     					Save this tree
   					</button>
 				</div>

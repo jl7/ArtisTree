@@ -171,18 +171,23 @@ $(document).ready(function() {
 		}
 	});
 
-	// $('#search-artist').submit(function(event) {
-	// 	event.preventDefault();
-	// 	$('#home-page').hide();
-	// 	$('#tree-view').show();
-	// 	$('#save').show();
-	// 	$('#rightpane').show();
-	// 	suggestArtists($('#search-field').val());
-	// 	searchForArtist($('#search-field').val());
-	// });
-
 	$('#save-tree').click(function() {
 		console.log(d3Tree.getRoot());
+	});
+
+	$('body').on('click', function (e) {
+	    if(e.toElement.id == "help_instruction"){
+	    	$(".popup").fadeIn(500);
+			$("[data-toggle='popover']").popover('show');
+	    }
+	    else{ 
+	        $('[data-toggle="popover"]').popover('hide');
+	    }
+	});
+
+	$('.popup-inner').click(function() {
+		$(".popup").fadeOut(500);
+		 $("[data-toggle='popover']").popover('hide');
 	});
 
 	window.AT = {
