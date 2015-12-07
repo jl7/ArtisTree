@@ -1,16 +1,26 @@
 .brand {
   font-size: 20px;
   font-weight: 500;
-  padding-top: 5px
+  padding-top: 5px;
+  cursor: pointer;
 }
 
 .right {
-  background-color: #fafafa;
+  background-color: #f6f6f6;
 }
 
 #search-field {
   display: inline-flex;
 }
-#web_page_title{
-	cursor: pointer;
+
+main {
+  overflow: hidden;
+  height: auto;
+  background-color: #f6f6f6;
+}
+
+#left {
+  float: none;
+  width: auto;
+  overflow: hidden;
 }
