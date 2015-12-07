@@ -19,7 +19,7 @@
 }
 */
 .suggest-holder {
-	
+
 }
 .suggest-holder input {
 /*	width: 146px;
@@ -35,27 +35,24 @@
 }
 .suggest-holder li {
 	padding: 10px;
-
 }
 .suggest-holder li:hover {
 	cursor: pointer;
 }
+
 .suggest-holder li:hover, li.active {
 	background: rgba(0,120,0, .2);
 }
-.suggestResult {
+
+.suggest-result {
 	/*position:absolute;*/
 	font-weight: bold;	
 /*	display: block;
 *//*	height: 10px;
 */}
 
-.suggestNav {
+.suggest-nav {
 	position: absolute;
-}
-
-#search-field {
-  display: inline-flex;
 }
 
 #main {

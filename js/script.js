@@ -1,13 +1,15 @@
-var ECHO_NEST_API_KEY = 'PF5AWHKSEDOEJ6IXM';
-var CHILD_LIMIT = 5;
-
-var suggestArtistsData = []; 
-
-
 $(document).ready(function() {
+	var ECHO_NEST_API_KEY = 'PF5AWHKSEDOEJ6IXM';
+	var CHILD_LIMIT = 5;
 
     var spotifyPlayTemplateSource = $('#spotify-play-template').html();
     var spotifyPlayTemplate = Handlebars.compile(spotifyPlayTemplateSource);
+    var suggestResultsTemplateSource = $('#suggest-results-template').html();
+	var suggestResultsTemplate = Handlebars.compile(suggestResultsTemplateSource); 
+	//get name when item is clicked on dropdown menu 
+	Handlebars.registerHelper('json', function(context) {
+	    return JSON.stringify(context);
+	});
 
 	var getMostPopularArtists = function() {
 		$.ajax({
@@ -27,53 +29,20 @@ $(document).ready(function() {
 		});
 	}
 
-	$('.suggest-holder input').on('input', function() {
-			suggestArtistsData = []; 
-			suggestArtists2($('#search-field').val());
-
-	});
-
-
-	var getArtistImageAndName = function (index, artistId) {
+	var suggestArtists = function (query) {
 		$.ajax({
-			url: 'https://api.spotify.com/v1/artists/'+artistId,
-			success: function(response) {
-				var name = response.name;
-				$('#'+index).find('img').attr('src', response.images[2].url);
-				$('#'+index).find('img').attr('alt', name);	
-				$('#'+index).find('h3').text(name);
-			}
-		});
-	}
-
-	// var suggestArtists = function (query) {
-	// 	$.ajax({
-	// 		url: 'http://developer.echonest.com/api/v4/artist/suggest',
-	// 		data: {
-	// 			api_key: ECHO_NEST_API_KEY,
-	// 			results: 15,
-	// 			q: query
-	// 		},
-	// 		success: function(response) {
-	// 			console.log(response);
-	// 		}
-	// 	});
-	// }
-
-	var getSimilarArtists = function (artistId) {
-		$.ajax({
-			url: 'http://developer.echonest.com/api/v4/artist/similar',
+			url: 'http://developer.echonest.com/api/v4/artist/suggest',
 			data: {
 				api_key: ECHO_NEST_API_KEY,
-				id: 'spotify:artist:'+artistId,
-				results: CHILD_LIMIT,
-				bucket: 'id:spotify',
-				limit: true
+				results: 15,
+				q: query,
 			},
 			success: function(data) {
-				console.log(data);
-			}
-		});
+				console.log(data.response);
+   				$('.suggest-nav').html(suggestResultsTemplate(data.response));
+   				$('.suggest-nav').show();
+   			}
+	    });
 	}
 
 	var getSimilarArtistsForNode = function (node, exploredArtistIds) {
@@ -153,12 +122,21 @@ $(document).ready(function() {
 		});
 	}
 
+	//use name from search dropdown to reset text value on input group
+	window.searchName = function(searchName) {
+		$('#search-artist').val(searchName);
+		$('.suggest-nav').hide();
+		$('#home-page').hide();
+		$('#tree-view').show();
+		$('#save').show();
+		$('#rightpane').show();
+		searchForArtist(searchName);
+	}
+
 	var initArtistRoot = function (artist) {
         d3Tree.setRoot(artist);
-        $('#search-field').val('');
+        $('#search-artist').val('');
     }
-
-		
 
 	var init = function() {
 		$('#rightpane').height($(window).height());
@@ -176,12 +154,21 @@ $(document).ready(function() {
         $('#rightpane').height(height);
 	});
 
-	$('.thumbnail').find('a').click(function() {
+	$('.thumbnail a').click(function() {
 		$('#home-page').hide();
 		$('#tree-view').show();
 		$('#save').show();
 		$('#rightpane').show();
 		initArtistRoot($(this).data('artist'));
+	});
+
+	$('#search-artist').on('input', function() {
+		var input = $('#search-artist').val().trim();
+		if(input) {
+			suggestArtists(input);
+		} else {
+			$('.suggest-nav').hide();
+		}
 	});
 
 	// $('#search-artist').submit(function(event) {
@@ -202,41 +189,4 @@ $(document).ready(function() {
 		getSimilarArtistsForNode: getSimilarArtistsForNode,
 		getTopTracksForArtist: getTopTracksForArtist
 	};
-}); //end of $(document).ready(function() 
-
-
-//use name from search dropdown to reset text value on input group
-var passSearchName = function(searchName) {
-	$("#search-field").val(searchName); 
-}
-
-var suggestArtists2 = function (query) {
-		$.ajax({
-			url: 'http://developer.echonest.com/api/v4/artist/suggest',
-			data: {
-				api_key: ECHO_NEST_API_KEY,
-				results: 15,
-				q: query,
-			},
-			success: function(data) {
-
-				var suggestedArtists = data.response.artists;
-				console.log(suggestedArtists); 
-
-				for(var i=0, l=suggestedArtists.length; i<l; i++) {
-					var theTemplateScript = $("#suggest-result-template").html();
-					var theTemplate = Handlebars.compile(theTemplateScript); 
-					//get name when item is clicked on dropdown menu 
-					Handlebars.registerHelper('json', function(context) {
-					    return JSON.stringify(context);
-					});
-
-					// Clear the ul
-					$(".suggestNav").empty(theTemplate());
-   					$(".suggestNav").append(theTemplate(suggestedArtists));
-   				}
-   				   $('.suggest-holder ul').show();
-
-   			}
-    });
-}
+}); //end of $(document).ready()
