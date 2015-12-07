@@ -124,3 +124,7 @@
     background:rgba(0,0,0,1);
     text-decoration:none;
 }
+.thumbnail a>img, .thumbnail>img{
+	width: 200px;
+	height: 200px;
+}
