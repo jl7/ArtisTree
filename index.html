@@ -5,12 +5,11 @@
 	<meta charset="utf-8">
 
 	<title>ArtisTree</title> 
-
 	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/handlebars-v4.0.4.js"></script>
     <link rel="stylesheet" type="text/css" href="css/sp-bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/d3.min.js"></script>
     <script type="text/javascript" src="js/store.min.js"></script>
     <script type="text/javascript" src="js/d3tree.js"></script>
@@ -18,16 +17,15 @@
 </head> 
 <body>
 	<div class="container">
-<<<<<<< HEAD
-
 		<div class="page-header">
-			<h1 >ArtisTree <small>Discover Similar Artists</small>
+			<h2><span data-toggle="popover" data-content="Click here to return to Homepage" data-placement="bottom">ArtisTree <small>Discover Similar Artists</small></span>
 			<span class="btn-group pull-right">	
-			  	<button type="button" class="btn btn-primary ">
+			  	<button type="button" class="btn btn-primary" id="help_instruction">
 		    		Need help?
 		  		</button>
 		  	</span>
-		  	</h1>
+		 
+		  	</h2>
 		</div>
 	
 		<div class="row">
@@ -35,7 +33,7 @@
 				<div class="dropdown suggest-holder">
 
 					<div class="input-group" id="search" data-toggle="dropdown">
-					  <input type="text" class="form-control" id="search-field" placeholder="Search for an Artist" aria-describedby="basic-addon1" >
+					  <input type="text" class="form-control" id="search-field" placeholder="Search for an Artist" aria-describedby="basic-addon1"  data-toggle="popover" data-content="Type and search an artist" data-placement="top">
 						<span class="input-group-addon">
 	        				<i class="glyphicon glyphicon-search"></i>
 	        			</span>
@@ -161,7 +159,7 @@
 				</div>
 				<div id="tree-view" class="panel-primary"></div>
 				<div id="save">
-  					<button id="save-tree" type="button" class="btn btn-primary btn-sm">
+  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save the current tree view" data-placement="top">
     					Save this tree
   					</button>
 				</div>
@@ -186,7 +184,11 @@
 		   {{/each}}
 ​	</script>
 
-	
+	<div class="popup" data-popup="popup-3">
+	        <div class="popup-inner">
+	        	Got it!
+	        </div>
+	</div>
 
 
 </body>
