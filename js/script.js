@@ -48,25 +48,36 @@ $(document).ready(function() {
 
 	$('.suggest-holder input').on('input', function() {
 			suggestArtistsData = []; 
-			suggestArtists($('#search-field').val());
+			suggestArtists2($('#search-field').val());
 
 	});
 
-	var getArtistImageAndName = function (index, artistId) {
 
-	var suggestArtists = function (query) {
+	var getArtistImageAndName = function (index, artistId) {
 		$.ajax({
-			url: 'http://developer.echonest.com/api/v4/artist/suggest',
-			data: {
-				api_key: ECHO_NEST_API_KEY,
-				results: 15,
-				q: query
-			},
+			url: 'https://api.spotify.com/v1/artists/'+artistId,
 			success: function(response) {
-				console.log(response);
+				var name = response.name;
+				$('#'+index).find('img').attr('src', response.images[2].url);
+				$('#'+index).find('img').attr('alt', name);	
+				$('#'+index).find('h3').text(name);
 			}
 		});
 	}
+
+	// var suggestArtists = function (query) {
+	// 	$.ajax({
+	// 		url: 'http://developer.echonest.com/api/v4/artist/suggest',
+	// 		data: {
+	// 			api_key: ECHO_NEST_API_KEY,
+	// 			results: 15,
+	// 			q: query
+	// 		},
+	// 		success: function(response) {
+	// 			console.log(response);
+	// 		}
+	// 	});
+	// }
 
 	var getSimilarArtists = function (artistId) {
 		$.ajax({
@@ -167,42 +178,6 @@ $(document).ready(function() {
         $('#search-field').val('');
     }
 
-}); //end of $(document).ready(function() 
-
-
-
-var suggestArtists = function (query) {
-
-		$.ajax({
-			url: 'http://developer.echonest.com/api/v4/artist/suggest',
-			data: {
-				api_key: ECHO_NEST_API_KEY,
-				results: 15,
-				q: query,
-			},
-			success: function(data) {
-
-				var suggestedArtists = data.response.artists;
-				console.log(suggestedArtists); 
-
-				for(var i=0, l=suggestedArtists.length; i<l; i++) {
-					var theTemplateScript = $("#suggest-result-template").html();
-					var theTemplate = Handlebars.compile(theTemplateScript); 
-					//get name when item is clicked on dropdown menu 
-					Handlebars.registerHelper('json', function(context) {
-					    return JSON.stringify(context);
-					});
-
-					// Clear the ul
-					$(".suggestNav").empty(theTemplate());
-
-   					$(".suggestNav").append(theTemplate(suggestedArtists));
-   				}
-   				   $('.suggest-holder ul').show();
-
-   			}
-    });
-}
 
 //use name from search dropdown to reset text value on input group
 var passSearchName = function(searchName) {
@@ -234,15 +209,15 @@ var passSearchName = function(searchName) {
 		initArtistRoot($(this).data('artist'));
 	});
 
-	$('#search-artist').submit(function(event) {
-		event.preventDefault();
-		$('#home-page').hide();
-		$('#tree-view').show();
-		$('#save').show();
-		$('#rightpane').show();
-		suggestArtists($('#search-field').val());
-		searchForArtist($('#search-field').val());
-	});
+	// $('#search-artist').submit(function(event) {
+	// 	event.preventDefault();
+	// 	$('#home-page').hide();
+	// 	$('#tree-view').show();
+	// 	$('#save').show();
+	// 	$('#rightpane').show();
+	// 	suggestArtists($('#search-field').val());
+	// 	searchForArtist($('#search-field').val());
+	// });
 
 	$('#save-tree').click(function() {
 		console.log(d3Tree.getRoot());
@@ -252,5 +227,37 @@ var passSearchName = function(searchName) {
 		getSimilarArtistsForNode: getSimilarArtistsForNode,
 		getTopTracksForArtist: getTopTracksForArtist
 	};
-});
+}); //end of $(document).ready(function() 
 
+
+
+var suggestArtists2 = function (query) {
+		$.ajax({
+			url: 'http://developer.echonest.com/api/v4/artist/suggest',
+			data: {
+				api_key: ECHO_NEST_API_KEY,
+				results: 15,
+				q: query,
+			},
+			success: function(data) {
+
+				var suggestedArtists = data.response.artists;
+				console.log(suggestedArtists); 
+
+				for(var i=0, l=suggestedArtists.length; i<l; i++) {
+					var theTemplateScript = $("#suggest-result-template").html();
+					var theTemplate = Handlebars.compile(theTemplateScript); 
+					//get name when item is clicked on dropdown menu 
+					Handlebars.registerHelper('json', function(context) {
+					    return JSON.stringify(context);
+					});
+
+					// Clear the ul
+					$(".suggestNav").empty(theTemplate());
+   					$(".suggestNav").append(theTemplate(suggestedArtists));
+   				}
+   				   $('.suggest-holder ul').show();
+
+   			}
+    });
+}

@@ -18,7 +18,7 @@
 </head> 
 <body>
 	<div class="container">
-<<<<<<< HEAD
+
 
 		<div class="page-header">
 			<h1 >ArtisTree <small>Discover Similar Artists</small>
@@ -179,14 +179,12 @@
 		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{name}} Top Tracks:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
 	</script>
 
-
 	<script id="suggest-result-template" type="text/x-handlebars-template">​
 		  {{#each this}}​
 		    <li class="suggestResult" onclick="passSearchName({{json this.name}})">{{name}}</li>​
 		   {{/each}}
 ​	</script>
 
-	
 
 
 </body>
