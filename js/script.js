@@ -178,11 +178,6 @@ $(document).ready(function() {
         $('#search-field').val('');
     }
 
-
-//use name from search dropdown to reset text value on input group
-var passSearchName = function(searchName) {
-	$("#search-field").val(searchName); 
-}
 		
 
 	var init = function() {
@@ -230,6 +225,10 @@ var passSearchName = function(searchName) {
 }); //end of $(document).ready(function() 
 
 
+//use name from search dropdown to reset text value on input group
+var passSearchName = function(searchName) {
+	$("#search-field").val(searchName); 
+}
 
 var suggestArtists2 = function (query) {
 		$.ajax({
