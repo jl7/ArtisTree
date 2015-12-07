@@ -17,19 +17,42 @@
 </head> 
 <body>
 	<div class="container">
-		<div id="search" class="row">
-			<span class="brand col-md-1">ArtisTree</span>
-			<form id="search-artist" class="col-md-9" role="form">
-		      	<input id="search-field" type="text" class="form-control" placeholder="Search for an Artist">
-			</form>
-			<button type="button" class="btn btn-primary btn-sm col-md-2">
-	    		Need help?
-	  		</button>
+
+		<div class="page-header">
+			<h1 >ArtisTree <small>Discover Similar Artists</small>
+			<span class="btn-group pull-right">	
+			  	<button type="button" class="btn btn-primary ">
+		    		Need help?
+		  		</button>
+		  	</span>
+		  	</h1>
 		</div>
+	
+		<div class="row">
+			<div class="center-div ">
+				<div class="dropdown suggest-holder">
+
+					<div class="input-group" id="search" data-toggle="dropdown">
+					  <input type="text" class="form-control" id="search-field" placeholder="Search for an Artist" aria-describedby="basic-addon1" >
+						<span class="input-group-addon">
+	        				<i class="glyphicon glyphicon-search"></i>
+	        			</span>
+					</div>
+
+					<ul class="dropdown-menu suggestNav col-md-11"  aria-labelledby="dropdownMenu1">
+   
+ 					</ul>	
+				</div>
+			</div>
+		</div>
+		<br>
+
+
 		<div class="row">
 			<div id="rightpane" class="right pull-right">
 				<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:5Z7ygHQo02SUrFmcgpwsKW,1x6ACsKV4UdWS2FMuPFUiT,4bi73jCM02fMpkI11Lqmfe" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
 			</div>
+
 			<div id="main" class="panel panel-primary">
 				<div class="panel-body">
 	    			<h2 style="margin-top: 5px;">Current Top Artists<h2>
@@ -125,5 +148,16 @@
 	<script id="spotify-play-template" type="text/x-handlebars-template">
 		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{title}}:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
 	</script>
+
+
+	<script id="suggest-result-template" type="text/x-handlebars-template">​
+		  {{#each this}}​
+		    <li class="suggestResult" onclick="passSearchName({{json this.name}})">{{name}}</li>​
+		   {{/each}}
+​	</script>
+
+	
+
+
 </body>
 

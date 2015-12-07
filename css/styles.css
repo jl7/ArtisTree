@@ -1,9 +1,52 @@
 .brand {
-  font-size: 20px;
-  font-weight: 500;
-  padding-top: 5px
+	font-size: 20px;
+	font-weight: 500;
+	padding-top: 5px
+}
+h1 .btn-group { display: inline-block; }
+
+.center-div
+{
+     margin: 0 auto;
+     width: 400px; 
 }
 
-#search-field {
-  display: inline-flex;
+/*#search-field {
+	display: inline-flex;
+}
+*/
+.suggest-holder {
+	
+}
+.suggest-holder input {
+/*	width: 146px;
+*/	border: 1px solid rgba(0,120,0,.6);
+}
+.suggest-holder ul {
+	display: none;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border: 1px solid rgba(0,120,0,.6);
+/*	margin-top: 30px;*/
+}
+.suggest-holder li {
+	padding: 10px;
+
+}
+.suggest-holder li:hover {
+	cursor: pointer;
+}
+.suggest-holder li:hover, li.active {
+	background: rgba(0,120,0, .2);
+}
+.suggestResult {
+	/*position:absolute;*/
+	font-weight: bold;	
+/*	display: block;
+*//*	height: 10px;
+*/}
+
+.suggestNav {
+	position: absolute;
 }
