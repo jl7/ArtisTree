@@ -1,23 +1,15 @@
 .brand {
 	font-size: 20px;
 	font-weight: 500;
-	padding-top: 5px
-
-  font-size: 20px;
-  font-weight: 500;
-  padding-top: 5px;
+	padding-top: 5px;
   cursor: pointer;
 }
 
 .right {
   background-color: #f6f6f6;
-
 }
-h1 .btn-group { display: inline-block; }
 
-
-.center-div
-{
+.center-div {
      margin: 0 auto;
      width: 400px; 
 }
@@ -66,7 +58,7 @@ h1 .btn-group { display: inline-block; }
   display: inline-flex;
 }
 
-main {
+#main {
   overflow: hidden;
   height: auto;
   background-color: #f6f6f6;

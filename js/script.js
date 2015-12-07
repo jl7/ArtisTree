@@ -5,19 +5,9 @@ var suggestArtistsData = [];
 
 
 $(document).ready(function() {
-	
-	var treeViewHTML = 
-		'<div id="tree-view"></div>' +
-		'<div id="save">' +
-      		'<button type="button" class="btn btn-primary btn-sm">' +
-	    		'Save this tree' +
-      		'</button>' +
-    	'</div>';
-
 
     var spotifyPlayTemplateSource = $('#spotify-play-template').html();
     var spotifyPlayTemplate = Handlebars.compile(spotifyPlayTemplateSource);
-
 
 	var getMostPopularArtists = function() {
 		$.ajax({
@@ -36,15 +26,6 @@ $(document).ready(function() {
 			}
 		});
 	}
-
-
-	var init = function() {
-		$('#rightpane').hide();
-		getMostPopularArtists();
-	}
-
-	init();
-
 
 	$('.suggest-holder input').on('input', function() {
 			suggestArtistsData = []; 
@@ -143,7 +124,6 @@ $(document).ready(function() {
 			},
 			success: function(response) {
 				var artist = response.artists.items[0];
-				getTopTracksForArtist(artist.name, artist.id, artist.images[2].url);
 				initArtistRoot(artist);
 			}
 		});
