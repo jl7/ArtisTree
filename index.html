@@ -13,10 +13,12 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/d3.min.js"></script>
     <script type="text/javascript" src="js/store.min.js"></script>
+    <script type="text/javascript" src="js/d3tree.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
 </head> 
 <body>
 	<div class="container">
+<<<<<<< HEAD
 
 		<div class="page-header">
 			<h1 >ArtisTree <small>Discover Similar Artists</small>
@@ -49,52 +51,68 @@
 
 
 		<div class="row">
+
+		<!-- <div id="search" class="row panel panel-primary">
+			<a href="./index.html" class="brand col-md-1">ArtisTree</a>
+			<form id="search-artist" class="col-md-9" role="form">
+		      	<input id="search-field" type="text" class="form-control" placeholder="Search for an Artist">
+			</form>
+			<button type="button" class="btn btn-primary btn-sm col-md-2">
+	    		Need help?
+	  		</button>
+		</div> -->
+		<div id="main" class="row">
+
 			<div id="rightpane" class="right pull-right">
-				<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:5Z7ygHQo02SUrFmcgpwsKW,1x6ACsKV4UdWS2FMuPFUiT,4bi73jCM02fMpkI11Lqmfe" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
 			</div>
+
 
 			<div id="main" class="panel panel-primary">
 				<div class="panel-body">
+
+			<div id="left" class="panel panel-primary">
+				<div id="home-page" class="panel-body">
+
 	    			<h2 style="margin-top: 5px;">Current Top Artists<h2>
 					<div class="row">
 						<div id="0" class="col-md-3">
 							<div class="thumbnail">
 								<a href="#">
 									<img src="" alt="">
+									<div class="caption">
+										<h3 class="text-center"></h3>
+									</div>
 								</a>
-								<div class="caption">
-									<h3 class="text-center"></h3>
-								</div>
 							</div>
 						</div>
 						<div id="1" class="col-md-3">
 							<div class="thumbnail">
 								<a href="#">
 									<img src="" alt="">
+									<div class="caption">
+										<h3 class="text-center"></h3>
+									</div>
 								</a>
-								<div class="caption">
-									<h3 class="text-center"></h3>
-								</div>
 							</div>
 						</div>
 						<div id="2" class="col-md-3">
 							<div class="thumbnail">
 								<a href="#">
 									<img src="" alt="">
+									<div class="caption">
+										<h3 class="text-center"></h3>
+									</div>
 								</a>
-								<div class="caption">
-									<h3 class="text-center"></h3>
-								</div>
 							</div>
 						</div>
 						<div id="3" class="col-md-3">
 							<div class="thumbnail">
 								<a href="#">
 									<img src="" alt="">
+									<div class="caption">
+										<h3 class="text-center"></h3>
+									</div>
 								</a>
-								<div class="caption">
-									<h3 class="text-center"></h3>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -103,50 +121,62 @@
 							<div class="thumbnail">
 								<a href="#">
 									<img src="" alt="">
+									<div class="caption">
+										<h3 class="text-center"></h3>
+									</div>
 								</a>
-								<div class="caption">
-									<h3 class="text-center"></h3>
-								</div>
 							</div>
 						</div>
 						<div id="5" class="col-md-3">
 							<div class="thumbnail">
 								<a href="#">
 									<img src="" alt="">
+									<div class="caption">
+										<h3 class="text-center"></h3>
+									</div>
 								</a>
-								<div class="caption">
-									<h3 class="text-center"></h3>
-								</div>
 							</div>
 						</div>
 						<div id="6" class="col-md-3">
 							<div class="thumbnail">
 								<a href="#">
 									<img src="" alt="">
+									<div class="caption">
+										<h3 class="text-center"></h3>
+									</div>
 								</a>
-								<div class="caption">
-									<h3 class="text-center"></h3>
-								</div>
 							</div>
 						</div>
 						<div id="7" class="col-md-3">
 							<div class="thumbnail">
 								<a href="#">
 									<img src="" alt="">
+									<div class="caption">
+										<h3 class="text-center"></h3>
+									</div>
 								</a>
-								<div class="caption">
-									<h3 class="text-center"></h3>
-								</div>
 							</div>
 						</div>
 					</div>
+				</div>
+				<div id="tree-view" class="panel-primary"></div>
+				<div id="save">
+  					<button id="save-tree" type="button" class="btn btn-primary btn-sm">
+    					Save this tree
+  					</button>
 				</div>
 	    	</div>
 		</div>
 	</div>
 	<!-- For Handlebars -->
 	<script id="spotify-play-template" type="text/x-handlebars-template">
-		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{title}}:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
+		<div class="thumbnail">
+			<img src="{{url}}" alt="{{name}}">
+			<div class="caption">
+				<h4 class="text-center">{{name}}</h4>
+			</div>
+		</div>
+		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{name}} Top Tracks:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
 	</script>
 
 

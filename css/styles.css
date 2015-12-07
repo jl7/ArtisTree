@@ -1,9 +1,21 @@
 .brand {
+
 	font-size: 20px;
 	font-weight: 500;
 	padding-top: 5px
+
+  font-size: 20px;
+  font-weight: 500;
+  padding-top: 5px;
+  cursor: pointer;
+}
+
+.right {
+  background-color: #f6f6f6;
+
 }
 h1 .btn-group { display: inline-block; }
+
 
 .center-div
 {
@@ -50,3 +62,20 @@ h1 .btn-group { display: inline-block; }
 .suggestNav {
 	position: absolute;
 }
+
+#search-field {
+  display: inline-flex;
+}
+
+main {
+  overflow: hidden;
+  height: auto;
+  background-color: #f6f6f6;
+}
+
+#left {
+  float: none;
+  width: auto;
+  overflow: hidden;
+}
+
