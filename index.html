@@ -5,11 +5,12 @@
 	<meta charset="utf-8">
 
 	<title>ArtisTree</title> 
+
 	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/handlebars-v4.0.4.js"></script>
     <link rel="stylesheet" type="text/css" href="css/sp-bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/d3.min.js"></script>
     <script type="text/javascript" src="js/store.min.js"></script>
     <script type="text/javascript" src="js/d3tree.js"></script>
@@ -17,39 +18,29 @@
 </head> 
 <body>
 	<div class="container">
-		<div class="page-header">
-			<h2><span data-toggle="popover" data-content="Click here to return to Homepage" data-placement="bottom">ArtisTree <small>Discover Similar Artists</small></span>
-			<span class="btn-group pull-right">	
-			  	<button type="button" class="btn btn-primary" id="help_instruction">
+		<div class="row">
+			<div class="page-header">
+				<button type="button" class="btn btn-primary pull-right" id="help_instruction">
 		    		Need help?
 		  		</button>
-		  	</span>
-		 
-		  	</h2>
+	
+				<h3><span data-toggle="popover" data-content="Click here to return to Homepage" data-placement="bottom">ArtisTree</span><small>Discover Similar Artists</small></h3>
+			</div>
 		</div>
 	
 		<div class="row">
-			<div class="center-div ">
+			<div class="center-div">
 				<div class="dropdown suggest-holder">
-
 					<div class="input-group" id="search" data-toggle="dropdown">
-					  <input type="text" class="form-control" id="search-field" placeholder="Search for an Artist" aria-describedby="basic-addon1"  data-toggle="popover" data-content="Type and search an artist" data-placement="top">
+	
+						<input type="text" class="form-control" id="search-field" placeholder="Search for an Artist" data-toggle="popover" data-content="Type and search an artist" data-placement="top">
 						<span class="input-group-addon">
-	        				<i class="glyphicon glyphicon-search"></i>
 	        			</span>
 					</div>
-
-					<ul class="dropdown-menu suggestNav col-md-11"  aria-labelledby="dropdownMenu1">
-   
- 					</ul>	
+					<ul class="dropdown-menu suggestNav col-md-11"></ul>
 				</div>
 			</div>
 		</div>
-		<br>
-
-
-		<div class="row">
-
 		<!-- <div id="search" class="row panel panel-primary">
 			<a href="./index.html" class="brand col-md-1">ArtisTree</a>
 			<form id="search-artist" class="col-md-9" role="form">
@@ -61,16 +52,10 @@
 		</div> -->
 		<div id="main" class="row">
 
-			<div id="rightpane" class="right pull-right">
-			</div>
-
-
-			<div id="main" class="panel panel-primary">
-				<div class="panel-body">
+			<div id="rightpane" class="right pull-right"></div>
 
 			<div id="left" class="panel panel-primary">
 				<div id="home-page" class="panel-body">
-
 	    			<h2 style="margin-top: 5px;">Current Top Artists<h2>
 					<div class="row">
 						<div id="0" class="col-md-3">
@@ -177,11 +162,10 @@
 		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{name}} Top Tracks:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
 	</script>
 
-
 	<script id="suggest-result-template" type="text/x-handlebars-template">​
-		  {{#each this}}​
-		    <li class="suggestResult" onclick="passSearchName({{json this.name}})">{{name}}</li>​
-		   {{/each}}
+		{{#each this}}​
+		<li class="suggestResult" onclick="passSearchName({{json this.name}})">{{name}}</li>​
+		{{/each}}
 ​	</script>
 
 	<div class="popup" data-popup="popup-3">
@@ -189,7 +173,6 @@
 	        	Got it!
 	        </div>
 	</div>
-
 
 </body>
 
