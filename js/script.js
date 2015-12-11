@@ -6,6 +6,9 @@ $(document).ready(function() {
     var spotifyPlayTemplate = Handlebars.compile(spotifyPlayTemplateSource);
     var suggestResultsTemplateSource = $('#suggest-results-template').html();
 	var suggestResultsTemplate = Handlebars.compile(suggestResultsTemplateSource); 
+	var savedTreesTemplateSource = $('#saved-trees-template').html();
+	var savedTreesTemplate = Handlebars.compile(savedTreesTemplateSource);
+
 	//get name when item is clicked on dropdown menu 
 	Handlebars.registerHelper('json', function(context) {
 	    return JSON.stringify(context);
@@ -138,9 +141,27 @@ $(document).ready(function() {
         $('#search-artist').val('');
     }
 
+    var initDataRoot = function (dataKey) {
+        d3Tree.setRootData(store.get(dataKey));
+        var artist = store.get(dataKey).artist;
+        getTopTracksForArtist(artist.name, artist.id, artist.images[2].url);
+    }
+
 	var init = function() {
 		$('#rightpane').height($(window).height());
-		$('#rightpane').hide();
+		if(!store.enabled) {
+            alert('Local storage is not supported by your browser. To save data and view previously saved data, please disable "Private Mode", or upgrade to a modern browser.');
+        }
+		if(jQuery.isEmptyObject(store.getAll())) {
+			$('#rightpane').hide();
+		}
+		else {
+			$('#rightpane').html(savedTreesTemplate(store.getAll()));
+			$('#clear-trees').click(function() {
+				store.clear();
+				$('#rightpane').hide();
+			});
+		}
 		$('#tree-view').hide();
 		$('#save').hide();
 		getMostPopularArtists();
@@ -171,14 +192,58 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#save-tree').click(function() {
-		console.log(d3Tree.getRoot());
+	$('#save-tree-modal').on('shown.bs.modal', function() {
+		$('#new-tree-name').focus();
+	});
+
+	$('#save-tree-modal').on('show.bs.modal', function() {
+		$('#new-tree-name').val('');
+		$('#tree-saved-alert').hide();
+	});
+
+	$('#new-tree-name').on('input', function() {
+		var newTreeName = $('#new-tree-name').val().trim();
+		if(newTreeName !== '') {
+			$('#no-name-error').hide();
+		}
+		if(newTreeName.length <= 30) {
+			$('#long-name-error').hide();
+		}
+		if(!(newTreeName in store.getAll())) {
+			$('#tree-exists-error').hide();
+		}
+	});
+
+	$('#name-tree').submit(function(event) {
+		event.preventDefault();
+		var newTreeName = $('#new-tree-name').val().trim();
+		if(newTreeName === '') {
+			$('#no-name-error').show();
+		} else if(newTreeName.length > 30) {
+			$('#long-name-error').show();
+		} else if(newTreeName in store.getAll()) {
+			$('#tree-exists-error').show();
+		} else {
+			store.set(newTreeName, d3Tree.getRoot());
+			$('#tree-saved-alert').show();
+			$('#tree-saved-alert').fadeOut('slow', function() {
+				$('#save-tree-modal').modal('hide');
+  			});
+		}
+	});
+
+	$('.saved-tree').click(function() {
+		$('#home-page').hide();
+		$('#tree-view').show();
+		$('#save').show();
+		$('#rightpane').show();
+		initDataRoot($(this).text());
 	});
 
 	$('body').on('click', function (e) {
-	    if(e.toElement.id == "help_instruction"){
-	    	$(".popup").fadeIn(500);
-			$("[data-toggle='popover']").popover('show');
+	    if(e.toElement.id == 'help_instruction'){
+	    	$('.popup').fadeIn(500);
+			$('[data-toggle="popover"]').popover('show');
 	    }
 	    else{ 
 	        $('[data-toggle="popover"]').popover('hide');
@@ -186,8 +251,8 @@ $(document).ready(function() {
 	});
 
 	$('.popup-inner').click(function() {
-		$(".popup").fadeOut(500);
-		 $("[data-toggle='popover']").popover('hide');
+		$('.popup').fadeOut(500);
+		 $('[data-toggle="popover"]').popover('hide');
 	});
 
 	window.AT = {

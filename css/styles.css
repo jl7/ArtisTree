@@ -55,6 +55,15 @@
 	position: absolute;
 }
 
+.alert {
+  display: inline;
+}
+
+.input-error {
+  color: red;
+  display: none;
+}
+
 #main {
   overflow: hidden;
   height: auto;

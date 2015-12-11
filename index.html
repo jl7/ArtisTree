@@ -17,6 +17,32 @@
     <script type="text/javascript" src="js/script.js"></script>
 </head> 
 <body>
+	<div id="save-tree-modal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Save Tree</h4>
+				</div>
+				<form id="name-tree">
+					<div class="modal-body">
+						<label for="new-tree-name">Please enter a name for the tree</label>
+						<input id="new-tree-name" type="text" class="form-control">
+						<div id="no-name-error" class="input-error">No name entered</div>
+						<div id="long-name-error" class="input-error">Name entered is too long</div>
+						<div id="tree-exists-error" class="input-error">Tree name already exists</div>
+						<div id="tree-saved-alert" class="alert">Tree saved!</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-primary">Save Tree</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="page-header">
@@ -24,27 +50,18 @@
 		    		Need help?
 		  		</button>
 	
-				<h3><a href="./index.html" class="brand" data-toggle="popover" data-content="Click here to return to Homepage" data-placement="bottom">ArtisTree</a> <small>Discover Similar Artists</a></small></h3>
+				<h3><a href="./index.html" class="brand" data-toggle="popover" data-content="Click here to return to the homepage" data-placement="bottom">ArtisTree</a> <small>Discover Similar Artists</a></small></h3>
 			</div>
 		</div>
 	
 		<div class="row">
 			<div class="center-div">
 				<div class="dropdown suggest-holder">
-					<input type="text" class="form-control" id="search-artist" placeholder="Search for an Artist" data-toggle="popover" data-content="Type and search an artist" data-placement="top">
+					<input type="text" class="form-control" id="search-artist" placeholder="Search for an Artist" data-toggle="popover" data-content="Type and search for an artist" data-placement="top">
 					<ul class="dropdown-menu suggest-nav col-md-12"></ul>
 				</div>
 			</div>
 		</div>
-		<!-- <div id="search" class="row panel panel-primary">
-			<a href="./index.html" class="brand col-md-1">ArtisTree</a>
-			<form id="search-artist" class="col-md-9" role="form">
-		      	<input id="search-field" type="text" class="form-control" placeholder="Search for an Artist">
-			</form>
-			<button type="button" class="btn btn-primary btn-sm col-md-2">
-	    		Need help?
-	  		</button>
-		</div> -->
 		<div id="main" class="row">
 
 			<div id="rightpane" class="right pull-right"></div>
@@ -138,8 +155,8 @@
 					</div>
 				</div>
 				<div id="tree-view" class="panel-primary"></div>
-				<div id="save">
-  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save the current tree view" data-placement="top">
+				<div id="save" data-toggle="modal" data-target="#save-tree-modal">
+  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save the currently viewed tree" data-placement="top">
     					Save this tree
   					</button>
 				</div>
@@ -151,6 +168,7 @@
         	Got it!
         </div>
 	</div>
+
 	<!-- For Handlebars -->
 	<script id="spotify-play-template" type="text/x-handlebars-template">
 		<div class="thumbnail">
@@ -168,5 +186,16 @@
 		{{/each}}
 ​	</script>
 
+	<script id="saved-trees-template" type="text/x-handlebars-template">​
+		<h3>Previously Saved Trees</h3>
+		<ul>
+			{{#each this}}​
+			<li><a class="saved-tree" href="#">{{@key}}</a></li>​
+			{{/each}}
+		</ul>
+		<button id="clear-trees" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to clear all saved trees" data-placement="top">
+			Clear all trees
+		</button>
+​	</script>
 </body>
 
