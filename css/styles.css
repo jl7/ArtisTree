@@ -64,6 +64,38 @@
   display: none;
 }
 
+/* d3Tree */
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: black;
+  stroke-width: 2px;
+}
+
+.node text {
+  font-size:15px;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+.templink {
+  fill: none;
+  stroke: red;
+  stroke-width: 3px;
+}
+
+.overlay{
+  background-color:#FFFFFF;
+}
+
 #main {
   overflow: hidden;
   height: auto;
