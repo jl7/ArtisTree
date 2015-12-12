@@ -1,3 +1,6 @@
+/*
+    Adapted from Artist Explorer's dndTree.js
+*/
 $(document).ready(function() {
     'use strict';
 
