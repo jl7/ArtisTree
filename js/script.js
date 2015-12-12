@@ -239,19 +239,23 @@ $(document).ready(function() {
 		$('#rightpane').show();
 		initDataRoot($(this).text());
 	});
-
+	var showingHelpPopOver = false;
 	$('body').on('click', function (e) {
 	    if(e.toElement.id == 'help_instruction'){
 	    	$('.popup').fadeIn(500);
 			$('[data-toggle="popover"]').popover('show');
+			showingHelpPopOver = true;
 	    }
 	    else{ 
+	    	if(!showingHelpPopOver)
+	    		$('[data-toggle="popover"]').popover('hide');
 	    }
 	});
 
 	$('.popup-inner').click(function() {
 		$('.popup').fadeOut(500);
 		$('[data-toggle="popover"]').popover('hide');
+		showingHelpPopOver = false;
 	});
 
 	window.AT = {
