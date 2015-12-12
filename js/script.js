@@ -68,7 +68,7 @@ $(document).ready(function() {
                 });
                 var similarArtists = data.response.artists.slice(0, CHILD_LIMIT);
                 for(var i=0, l=similarArtists.length; i<l; i++) {
-					getArtistAndSetChild(i, node, similarArtists[i].foreign_ids[0].foreign_id.slice(15));
+					getArtistAndSetChild(node, similarArtists[i].foreign_ids[0].foreign_id.slice(15));
 				}
 			}
 		});
@@ -113,11 +113,11 @@ $(document).ready(function() {
 		});
 	}
 
-	var getArtistAndSetChild = function (index, node, artistId) {
+	var getArtistAndSetChild = function (node, artistId) {
 		$.ajax({
 			url: 'https://api.spotify.com/v1/artists/'+artistId,
 			success: function(response) {
-				d3Tree._addChild(node, response);
+				d3Tree._addChild(node, response, CHILD_LIMIT);
 			}
 		});
 	}

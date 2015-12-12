@@ -65,17 +65,19 @@ $(document).ready(function() {
         zoomListener.translate([x, y]);
     }
 
-    function addChild(node, artist) {
+    function addChild(node, artist, limit) {
         if(!node.children) {
             node.children = [];
         }
-        node.children.push(
-            {
-                'artist': artist,
-                'children': null
-            }
-        );
-        exploredArtistIds.push(artist.id);
+        if(node.children.length < limit) {
+            node.children.push(
+                {
+                    'artist': artist,
+                    'children': null
+                }
+            );
+            exploredArtistIds.push(artist.id);
+        }
         update(node);
         centerNode(node);
     }
@@ -362,8 +364,8 @@ $(document).ready(function() {
             updateWindow();
         },
 
-        _addChild: function(node, artist) {
-            addChild(node, artist);
+        _addChild: function(node, artist, limit) {
+            addChild(node, artist, limit);
         }
     };
 });
