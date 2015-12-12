@@ -246,13 +246,12 @@ $(document).ready(function() {
 			$('[data-toggle="popover"]').popover('show');
 	    }
 	    else{ 
-	        $('[data-toggle="popover"]').popover('hide');
 	    }
 	});
 
 	$('.popup-inner').click(function() {
 		$('.popup').fadeOut(500);
-		 $('[data-toggle="popover"]').popover('hide');
+		$('[data-toggle="popover"]').popover('hide');
 	});
 
 	window.AT = {
