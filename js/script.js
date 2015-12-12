@@ -117,7 +117,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: 'https://api.spotify.com/v1/artists/'+artistId,
 			success: function(response) {
-				d3Tree._addChild(node, response, CHILD_LIMIT);
+				d3Tree._addChild(node, response);
 			}
 		});
 	}

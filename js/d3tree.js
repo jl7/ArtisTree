@@ -65,19 +65,18 @@ $(document).ready(function() {
         zoomListener.translate([x, y]);
     }
 
-    function addChild(node, artist, limit) {
+    function addChild(node, artist) {
         if(!node.children) {
             node.children = [];
         }
-        if(node.children.length < limit) {
-            node.children.push(
-                {
-                    'artist': artist,
-                    'children': null
-                }
-            );
-            exploredArtistIds.push(artist.id);
-        }
+        node.children.push(
+            {
+                artist: artist,
+                children: null,
+                querying: false
+            }
+        );
+        exploredArtistIds.push(artist.id);
         update(node);
         centerNode(node);
     }
@@ -87,6 +86,7 @@ $(document).ready(function() {
         return {
             artist : artist,
             children: null,
+            querying: false
         }
     };
 
@@ -96,9 +96,9 @@ $(document).ready(function() {
             exploredArtistIds.push(to.artist.id);
         }
         if(from.children) {
-            to.children = []
+            to.children = [];
             from.children.forEach(function(child) {
-                var obj = {}
+                var obj = {};
                 initWithData(child, obj);
                 to.children.push(obj);
             })
@@ -126,10 +126,14 @@ $(document).ready(function() {
         if(d.children) {
             removeChildrenFromExplored(d);
             d.children = null;
+            d.querying = false;
             update(d);
             centerNode(d);
         } else {
-            AT.getSimilarArtistsForNode(d, exploredArtistIds);
+            if(!d.querying) {
+                d.querying = true;
+                AT.getSimilarArtistsForNode(d, exploredArtistIds);
+            }
         }
         return d;
     }
@@ -364,8 +368,8 @@ $(document).ready(function() {
             updateWindow();
         },
 
-        _addChild: function(node, artist, limit) {
-            addChild(node, artist, limit);
+        _addChild: function(node, artist) {
+            addChild(node, artist);
         }
     };
 });
