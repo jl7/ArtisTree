@@ -42,8 +42,12 @@ $(document).ready(function() {
 			},
 			success: function(data) {
 				console.log(data.response);
-   				$('.suggest-nav').html(suggestResultsTemplate(data.response));
-   				$('.suggest-nav').show();
+				if(data.response.artists.length > 0) {
+	   				$('.suggest-nav').html(suggestResultsTemplate(data.response));
+	   				$('.suggest-nav').show();
+   				} else {
+   					$('.suggest-nav').hide();
+   				}
    			}
 	    });
 	}
