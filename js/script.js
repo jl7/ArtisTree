@@ -136,6 +136,10 @@ $(document).ready(function() {
 		searchForArtist(searchName);
 	}
 
+
+
+
+
 	var initArtistRoot = function (artist) {
         d3Tree.setRoot(artist);
         $('#search-artist').val('');
@@ -156,11 +160,11 @@ $(document).ready(function() {
 			$('#rightpane').hide();
 		}
 		else {
-			$('#rightpane').html(savedTreesTemplate(store.getAll()));
-			$('#clear-trees').click(function() {
-				store.clear();
-				$('#rightpane').hide();
-			});
+			// $('#rightpane').html(savedTreesTemplate(store.getAll()));
+			// $('#clear-trees').click(function() {
+			// 	store.clear();
+			// 	$('#rightpane').hide();
+			// });
 		}
 		$('#tree-view').hide();
 		$('#save').hide();
@@ -232,13 +236,14 @@ $(document).ready(function() {
 		}
 	});
 
-	$('.saved-tree').click(function() {
+	window.openSavedTree = function(dataKey) {
 		$('#home-page').hide();
+		$('#showSavedTreesModal').modal('hide');
 		$('#tree-view').show();
 		$('#save').show();
 		$('#rightpane').show();
 		initDataRoot($(this).text());
-	});
+	}
 
 	$('body').on('click', function (e) {
 	    if(e.toElement.id == 'help_instruction'){
@@ -247,6 +252,17 @@ $(document).ready(function() {
 	    }
 	    else{ 
 	        $('[data-toggle="popover"]').popover('hide');
+	    }
+	});
+
+
+	$('body').on('click', function (e) {
+	    if(e.toElement.id == 'your_trees'){
+			$('#saved-trees-body').html(savedTreesTemplate(store.getAll()));
+	    	$('#clear-trees').click(function() {
+				store.clear();
+			}); 
+
 	    }
 	});
 
