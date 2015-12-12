@@ -56,7 +56,7 @@ $(document).ready(function() {
         var scale = zoomListener.scale();
         var x = -source.y0;
         var y = -source.x0;
-        x = x * scale + viewerWidth / 2;
+        x = x * scale + viewerWidth / 4;
         y = y * scale + viewerHeight / 2;
         d3.select('#tree-view g').transition()
             .duration(duration)
@@ -76,9 +76,6 @@ $(document).ready(function() {
             }
         );
         exploredArtistIds.push(artist.id);
-    }
-
-    function updateAfterSetChildren(node) {
         update(node);
         centerNode(node);
     }
@@ -367,10 +364,6 @@ $(document).ready(function() {
 
         _addChild: function(node, artist) {
             addChild(node, artist);
-        },
-
-        _updateAfterSetChildren: function(node) {
-            updateAfterSetChildren(node);
         }
     };
 });

@@ -54,7 +54,7 @@ $(document).ready(function() {
 			data: {
 				api_key: ECHO_NEST_API_KEY,
 				id: 'spotify:artist:'+node.artist.id,
-				results: CHILD_LIMIT,
+				results: 100,
 				bucket: ['hotttnesss_rank','id:spotify'],
 				limit: true
 			},
@@ -66,7 +66,7 @@ $(document).ready(function() {
                 data.response.artists = data.response.artists.filter(function (artist) {
                     return exploredArtistIds.indexOf(artist.foreign_ids[0].foreign_id.slice(15)) === -1;
                 });
-                var similarArtists = data.response.artists.slice(0, 5);
+                var similarArtists = data.response.artists.slice(0, CHILD_LIMIT);
                 for(var i=0, l=similarArtists.length; i<l; i++) {
 					getArtistAndSetChild(i, node, similarArtists[i].foreign_ids[0].foreign_id.slice(15));
 				}
@@ -118,9 +118,6 @@ $(document).ready(function() {
 			url: 'https://api.spotify.com/v1/artists/'+artistId,
 			success: function(response) {
 				d3Tree._addChild(node, response);
-				if(index === CHILD_LIMIT-1) {
-					d3Tree._updateAfterSetChildren(node);
-				}
 			}
 		});
 	}
