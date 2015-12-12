@@ -54,7 +54,7 @@ $(document).ready(function() {
 			data: {
 				api_key: ECHO_NEST_API_KEY,
 				id: 'spotify:artist:'+node.artist.id,
-				results: CHILD_LIMIT,
+				results: 100,
 				bucket: ['hotttnesss_rank','id:spotify'],
 				limit: true
 			},
@@ -66,9 +66,9 @@ $(document).ready(function() {
                 data.response.artists = data.response.artists.filter(function (artist) {
                     return exploredArtistIds.indexOf(artist.foreign_ids[0].foreign_id.slice(15)) === -1;
                 });
-                var similarArtists = data.response.artists.slice(0, 5);
+                var similarArtists = data.response.artists.slice(0, CHILD_LIMIT);
                 for(var i=0, l=similarArtists.length; i<l; i++) {
-					getArtistAndSetChild(i, node, similarArtists[i].foreign_ids[0].foreign_id.slice(15));
+					getArtistAndSetChild(node, similarArtists[i].foreign_ids[0].foreign_id.slice(15));
 				}
 			}
 		});
@@ -113,14 +113,11 @@ $(document).ready(function() {
 		});
 	}
 
-	var getArtistAndSetChild = function (index, node, artistId) {
+	var getArtistAndSetChild = function (node, artistId) {
 		$.ajax({
 			url: 'https://api.spotify.com/v1/artists/'+artistId,
 			success: function(response) {
 				d3Tree._addChild(node, response);
-				if(index === CHILD_LIMIT-1) {
-					d3Tree._updateAfterSetChildren(node);
-				}
 			}
 		});
 	}
@@ -245,13 +242,16 @@ $(document).ready(function() {
 		initDataRoot($(this).text());
 	}
 
+	var showingHelpPopOver = false;
 	$('body').on('click', function (e) {
-	    if(e.toElement.id == 'help_instruction'){
+	    if(e.toElement.id == 'help-instruction'){
 	    	$('.popup').fadeIn(500);
 			$('[data-toggle="popover"]').popover('show');
+			showingHelpPopOver = true;
 	    }
 	    else{ 
-	        $('[data-toggle="popover"]').popover('hide');
+	    	if(!showingHelpPopOver)
+	    		$('[data-toggle="popover"]').popover('hide');
 	    }
 	});
 
@@ -268,7 +268,8 @@ $(document).ready(function() {
 
 	$('.popup-inner').click(function() {
 		$('.popup').fadeOut(500);
-		 $('[data-toggle="popover"]').popover('hide');
+		$('[data-toggle="popover"]').popover('hide');
+		showingHelpPopOver = false;
 	});
 
 	window.AT = {

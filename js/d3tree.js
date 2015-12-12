@@ -1,3 +1,6 @@
+/*
+    Adapted from Artist Explorer's dndTree.js
+*/
 $(document).ready(function() {
     'use strict';
 
@@ -56,7 +59,7 @@ $(document).ready(function() {
         var scale = zoomListener.scale();
         var x = -source.y0;
         var y = -source.x0;
-        x = x * scale + viewerWidth / 2;
+        x = x * scale + viewerWidth / 4;
         y = y * scale + viewerHeight / 2;
         d3.select('#tree-view g').transition()
             .duration(duration)
@@ -71,14 +74,12 @@ $(document).ready(function() {
         }
         node.children.push(
             {
-                'artist': artist,
-                'children': null
+                artist: artist,
+                children: null,
+                querying: false
             }
         );
         exploredArtistIds.push(artist.id);
-    }
-
-    function updateAfterSetChildren(node) {
         update(node);
         centerNode(node);
     }
@@ -88,6 +89,7 @@ $(document).ready(function() {
         return {
             artist : artist,
             children: null,
+            querying: false
         }
     };
 
@@ -97,9 +99,9 @@ $(document).ready(function() {
             exploredArtistIds.push(to.artist.id);
         }
         if(from.children) {
-            to.children = []
+            to.children = [];
             from.children.forEach(function(child) {
-                var obj = {}
+                var obj = {};
                 initWithData(child, obj);
                 to.children.push(obj);
             })
@@ -127,10 +129,14 @@ $(document).ready(function() {
         if(d.children) {
             removeChildrenFromExplored(d);
             d.children = null;
+            d.querying = false;
             update(d);
             centerNode(d);
         } else {
-            AT.getSimilarArtistsForNode(d, exploredArtistIds);
+            if(!d.querying) {
+                d.querying = true;
+                AT.getSimilarArtistsForNode(d, exploredArtistIds);
+            }
         }
         return d;
     }
@@ -367,10 +373,6 @@ $(document).ready(function() {
 
         _addChild: function(node, artist) {
             addChild(node, artist);
-        },
-
-        _updateAfterSetChildren: function(node) {
-            updateAfterSetChildren(node);
         }
     };
 });
