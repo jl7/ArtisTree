@@ -236,9 +236,10 @@ $(document).ready(function() {
 		$('#rightpane').show();
 		initDataRoot($(this).text());
 	});
+
 	var showingHelpPopOver = false;
 	$('body').on('click', function (e) {
-	    if(e.toElement.id == 'help_instruction'){
+	    if(e.toElement.id == 'help-instruction'){
 	    	$('.popup').fadeIn(500);
 			$('[data-toggle="popover"]').popover('show');
 			showingHelpPopOver = true;
