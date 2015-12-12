@@ -11,6 +11,7 @@ $(document).ready(function() {
     var rightPaneWidth = 300;
 
     var exploredArtistIds = [];
+    var lastClickedArtist = root;
 
     // avoid clippath issue by assigning each image its own clippath
     var clipPathId = 0;
@@ -76,7 +77,7 @@ $(document).ready(function() {
             {
                 artist: artist,
                 children: null,
-                querying: false
+                queried: false
             }
         );
         exploredArtistIds.push(artist.id);
@@ -89,7 +90,7 @@ $(document).ready(function() {
         return {
             artist : artist,
             children: null,
-            querying: false
+            queried: false
         }
     };
 
@@ -129,12 +130,12 @@ $(document).ready(function() {
         if(d.children) {
             removeChildrenFromExplored(d);
             d.children = null;
-            d.querying = false;
+            d.queried = false;
             update(d);
             centerNode(d);
         } else {
-            if(!d.querying) {
-                d.querying = true;
+            if(!d.queried) {
+                d.queried = true;
                 AT.getSimilarArtistsForNode(d, exploredArtistIds);
             }
         }
@@ -143,7 +144,10 @@ $(document).ready(function() {
 
     function click(d) {
         d = toggleChildren(d);
-        AT.getTopTracksForArtist(d.artist.name, d.artist.id, d.artist.images[2].url);
+        if(lastClickedArtist !== d) {
+            lastClickedArtist = d;
+            AT.getTopTracksForArtist(d.artist.name, d.artist.id, d.artist.images[2].url);
+        }
     }
 
     function update(source) {
@@ -199,10 +203,13 @@ $(document).ready(function() {
                 .append('circle')
                 .attr('r', 32);
 
-
         nodeEnter.append('image')
             .attr('xlink:href', function(d) {
-                return d.artist.images[2].url;
+                if(d.artist.images[2]) {
+                    return d.artist.images[2].url;
+                } else {
+                    return 'img/spotify.jpeg';
+                }
             })
             .attr('x', '-32px')
             .attr('y', '-32px')
@@ -359,6 +366,7 @@ $(document).ready(function() {
             initWithData(rootData, root);
             root.x0 = viewerHeight / 2;
             root.y0 = 0;
+            lastClickedArtist = root;
             update(root);
             centerNode(root);
         },

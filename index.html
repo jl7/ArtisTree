@@ -24,7 +24,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title">Save Tree</h4>
+					<h4 class="modal-title">Save New Tree</h4>
 				</div>
 				<form id="name-tree">
 					<div class="modal-body">
@@ -50,7 +50,7 @@
 		    		Need help?
 		  		</button>
 	
-				<h3><a href="./index.html" class="brand" data-toggle="popover" data-content="Click here to return to the homepage" data-placement="bottom">ArtisTree</a> <small>Discover Similar Artists</a></small></h3>
+				<h3><a href="./index.html" class="brand" data-toggle="popover" data-content="Click here to return to the homepage" data-placement="bottom">ArtisTree</a> <small>Discover Similar Artists</small></h3>
 			</div>
 		</div>
 	
@@ -154,11 +154,21 @@
 						</div>
 					</div>
 				</div>
-				<div id="tree-view" class="panel-primary"></div>
-				<div id="save" data-toggle="modal" data-target="#save-tree-modal">
-  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save the currently viewed tree" data-placement="top">
-    					Save this tree
-  					</button>
+				<div id="tree-page">
+					<h2 id="tree-heading"></h2>
+					<div id="tree-view" class="panel-primary"></div>
+					<span id="save" data-toggle="modal" data-target="#save-tree-modal">
+	  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save a new tree" data-placement="top">
+	    					Save new tree
+	  					</button>
+					</span>
+					<span id="change">
+						<a id="delete" href="./index.html" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to delete this tree and return to the homepage" data-placement="top">Delete this tree</a>
+	  					<button id="change-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save changes to the currently viewed tree" data-placement="top">
+	    					Save changes to tree
+	  					</button>
+	  					<div class="alert" style="display: none;">Tree changes saved!</div>
+  					</span>
 				</div>
 	    	</div>
 		</div>

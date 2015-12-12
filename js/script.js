@@ -117,18 +117,20 @@ $(document).ready(function() {
 		$.ajax({
 			url: 'https://api.spotify.com/v1/artists/'+artistId,
 			success: function(response) {
-				d3Tree._addChild(node, response);
+				if(response.id) {
+					d3Tree._addChild(node, response);
+				}
 			}
 		});
 	}
 
 	//use name from search dropdown to reset text value on input group
-	window.searchName = function(searchName) {
+	window.searchName = function (searchName) {
 		$('#search-artist').val(searchName);
 		$('.suggest-nav').hide();
 		$('#home-page').hide();
-		$('#tree-view').show();
-		$('#save').show();
+		$('#tree-page').show();
+		$('#change').hide();
 		$('#rightpane').show();
 		searchForArtist(searchName);
 	}
@@ -159,8 +161,7 @@ $(document).ready(function() {
 				$('#rightpane').hide();
 			});
 		}
-		$('#tree-view').hide();
-		$('#save').hide();
+		$('#tree-page').hide();
 		getMostPopularArtists();
 	}
 
@@ -174,8 +175,8 @@ $(document).ready(function() {
 
 	$('.thumbnail a').click(function() {
 		$('#home-page').hide();
-		$('#tree-view').show();
-		$('#save').show();
+		$('#tree-page').show();
+		$('#change').hide();
 		$('#rightpane').show();
 		initArtistRoot($(this).data('artist'));
 	});
@@ -229,12 +230,25 @@ $(document).ready(function() {
 		}
 	});
 
+	$('#delete').click(function() {
+		store.remove($('#tree-heading').text());
+	});
+
+	$('#change-tree').click(function() {
+		store.set($('#tree-heading').text(), d3Tree.getRoot());
+		$alert = $(this).next('div.alert');
+		$alert.show();
+		$alert.fadeOut('slow');
+	});
+
 	$('.saved-tree').click(function() {
+		var treeName = $(this).text();
 		$('#home-page').hide();
-		$('#tree-view').show();
-		$('#save').show();
+		$('#tree-page').show();
+		$('#change').show();
+		$('#tree-heading').text(treeName);
 		$('#rightpane').show();
-		initDataRoot($(this).text());
+		initDataRoot(treeName);
 	});
 
 	var showingHelpPopOver = false;
