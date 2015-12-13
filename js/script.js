@@ -9,11 +9,6 @@ $(document).ready(function() {
 	var savedTreesTemplateSource = $('#saved-trees-template').html();
 	var savedTreesTemplate = Handlebars.compile(savedTreesTemplateSource);
 
-	//get name when item is clicked on dropdown menu 
-	Handlebars.registerHelper('json', function(context) {
-	    return JSON.stringify(context);
-	});
-
 	var getMostPopularArtists = function() {
 		$.ajax({
 			url: 'http://developer.echonest.com/api/v4/artist/top_hottt',
@@ -30,7 +25,7 @@ $(document).ready(function() {
 				}
 			}
 		});
-	}
+	};
 
 	var suggestArtists = function (query) {
 		$.ajax({
@@ -44,13 +39,24 @@ $(document).ready(function() {
 				console.log(data.response);
 				if(data.response.artists.length > 0) {
 	   				$('.suggest-nav').html(suggestResultsTemplate(data.response));
+	   				//use name from search dropdown to reset text value on input
+					$('.suggest-result').click(function() {
+						var searchName = $(this).text();
+						$('#search-artist').val(searchName);
+						$('.suggest-nav').hide();
+						$('#home-page').hide();
+						$('#tree-page').show();
+						$('#change').hide();
+						$('#rightpane').show();
+						searchForArtist(searchName);
+					});
 	   				$('.suggest-nav').show();
    				} else {
    					$('.suggest-nav').hide();
    				}
    			}
 	    });
-	}
+	};
 
 	var getSimilarArtistsForNode = function (node, exploredArtistIds) {
 		$.ajax({
@@ -76,7 +82,7 @@ $(document).ready(function() {
 				}
 			}
 		});
-	}
+	};
 
 	var getArtistData = function (index, artistId) {
 		$.ajax({
@@ -89,7 +95,7 @@ $(document).ready(function() {
 				$('#'+index).find('a').data('artist', response);
 			}
 		});
-	}
+	};
 
 	var searchForArtist = function (artistName) {
 		$.ajax({
@@ -103,7 +109,7 @@ $(document).ready(function() {
 				initArtistRoot(artist);
 			}
 		});
-	}
+	};
 
 	var getTopTracksForArtist = function (artistName, artistId, artistImage) {
 		$.ajax({
@@ -115,7 +121,7 @@ $(document).ready(function() {
 				$('#rightpane').html(spotifyPlayTemplate({name: artistName, url: artistImage, tracks: response.tracks}));
 			}
 		});
-	}
+	};
 
 	var getArtistAndSetChild = function (node, artistId) {
 		$.ajax({
@@ -126,29 +132,18 @@ $(document).ready(function() {
 				}
 			}
 		});
-	}
-
-	//use name from search dropdown to reset text value on input group
-	window.searchName = function (searchName) {
-		$('#search-artist').val(searchName);
-		$('.suggest-nav').hide();
-		$('#home-page').hide();
-		$('#tree-page').show();
-		$('#change').hide();
-		$('#rightpane').show();
-		searchForArtist(searchName);
-	}
+	};
 
 	var initArtistRoot = function (artist) {
         d3Tree.setRoot(artist);
         $('#search-artist').val('');
-    }
+    };
 
     var initDataRoot = function (dataKey) {
         d3Tree.setRootData(store.get(dataKey));
         var artist = store.get(dataKey).artist;
         getTopTracksForArtist(artist.name, artist.id, artist.images[2].url);
-    }
+    };
 
 	var init = function() {
 		if(!store.enabled) {
@@ -158,7 +153,7 @@ $(document).ready(function() {
 		$('#rightpane').hide();
 		$('#tree-page').hide();
 		getMostPopularArtists();
-	}
+	};
 
 	init();
 
@@ -242,13 +237,12 @@ $(document).ready(function() {
 	});
 
 	$('#saved-trees-modal').on('show.bs.modal', function() {
-		var savedTrees = store.getAll();
-		if(jQuery.isEmptyObject(savedTrees)) {
+		if(jQuery.isEmptyObject(store.getAll())) {
 			$('#clear-trees').hide();
 			$('#saved-trees-body').html('');
 		} else {
 			$('#clear-trees').show();
-			$('#saved-trees-body').html(savedTreesTemplate(savedTrees));
+			$('#saved-trees-body').html(savedTreesTemplate(store.getAll()));
 			$('.saved-tree').click(function() {
 				var treeName = $(this).text();
 				$('#home-page').hide();

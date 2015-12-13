@@ -1,7 +1,6 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-
-<head> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
 	<meta charset="utf-8">
 
 	<title>ArtisTree</title> 
@@ -16,6 +15,7 @@
     <script type="text/javascript" src="js/d3tree.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
 </head> 
+
 <body>
 	<div id="save-tree-modal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
@@ -62,6 +62,7 @@
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+
 	<div class="container">
 		<div class="row">
 			<div class="page-header">
@@ -177,6 +178,7 @@
 						</div>
 					</div>
 				</div>
+
 				<div id="tree-page">
 					<h2 id="tree-heading"></h2>
 					<div id="tree-view" class="panel-primary"></div>
@@ -196,7 +198,8 @@
 	    	</div>
 		</div>
 	</div>
-	<div class="popup" data-popup="popup-3">
+
+	<div class="popup">
         <div class="popup-inner">
         	Got it!
         </div>
@@ -213,18 +216,18 @@
 		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{name}} Top Tracks:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
 	</script>
 
-	<script id="suggest-results-template" type="text/x-handlebars-template">​
-		{{#each artists}}​
-		<li class="suggest-result" onclick="searchName({{json name}})">{{name}}</li>​
+	<script id="suggest-results-template" type="text/x-handlebars-template">
+		{{#each artists}}
+		<li class="suggest-result">{{name}}</li>
 		{{/each}}
-​	</script>
+	</script>
 
-	<script id="saved-trees-template" type="text/x-handlebars-template">​
+	<script id="saved-trees-template" type="text/x-handlebars-template">
 		<ul>
-			{{#each this}}​
-			<li class="saved-tree"><a href="#">{{@key}}</a></li>​
+			{{#each this}}
+			<li class="saved-tree"><a href="#">{{@key}}</a></li>
 			{{/each}}
 		</ul>
-​	</script>
+	</script>
 </body>
-
+</html>
