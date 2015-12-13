@@ -139,10 +139,6 @@ $(document).ready(function() {
 		searchForArtist(searchName);
 	}
 
-
-
-
-
 	var initArtistRoot = function (artist) {
         d3Tree.setRoot(artist);
         $('#search-artist').val('');
@@ -155,20 +151,11 @@ $(document).ready(function() {
     }
 
 	var init = function() {
-		$('#rightpane').height($(window).height());
 		if(!store.enabled) {
             alert('Local storage is not supported by your browser. To save data and view previously saved data, please disable "Private Mode", or upgrade to a modern browser.');
         }
-		if(jQuery.isEmptyObject(store.getAll())) {
-			$('#rightpane').hide();
-		}
-		else {
-			// $('#rightpane').html(savedTreesTemplate(store.getAll()));
-			// $('#clear-trees').click(function() {
-			// 	store.clear();
-			// 	$('#rightpane').hide();
-			// });
-		}
+		$('#rightpane').height($(window).height());
+		$('#rightpane').hide();
 		$('#tree-page').hide();
 		getMostPopularArtists();
 	}
@@ -238,16 +225,6 @@ $(document).ready(function() {
 		}
 	});
 
-
-	window.openSavedTree = function(dataKey) {
-		$('#home-page').hide();
-		$('#showSavedTreesModal').modal('hide');
-		$('#tree-view').show();
-		$('#save').show();
-		$('#rightpane').show();
-		initDataRoot($(this).text());
-	}
-
 	$('#delete').click(function() {
 		store.remove($('#tree-heading').text());
 	});
@@ -259,14 +236,30 @@ $(document).ready(function() {
 		$alert.fadeOut('slow');
 	});
 
-	$('.saved-tree').click(function() {
-		var treeName = $(this).text();
-		$('#home-page').hide();
-		$('#tree-page').show();
-		$('#change').show();
-		$('#tree-heading').text(treeName);
-		$('#rightpane').show();
-		initDataRoot(treeName);
+	$('#clear-trees').click(function() {
+		store.clear();
+		$('#saved-trees-modal').modal('hide');
+	});
+
+	$('#saved-trees-modal').on('show.bs.modal', function() {
+		var savedTrees = store.getAll();
+		if(jQuery.isEmptyObject(savedTrees)) {
+			$('#clear-trees').hide();
+			$('#saved-trees-body').html('');
+		} else {
+			$('#clear-trees').show();
+			$('#saved-trees-body').html(savedTreesTemplate(savedTrees));
+			$('.saved-tree').click(function() {
+				var treeName = $(this).text();
+				$('#home-page').hide();
+				$('#tree-page').show();
+				$('#change').show();
+				$('#tree-heading').text(treeName);
+				$('#rightpane').show();
+				initDataRoot(treeName);
+				$('#saved-trees-modal').modal('hide');
+			});
+		}
 	});
 
 	var showingHelpPopOver = false;
@@ -277,19 +270,9 @@ $(document).ready(function() {
 			showingHelpPopOver = true;
 	    }
 	    else{ 
-	    	if(!showingHelpPopOver)
+	    	if(!showingHelpPopOver) {
 	    		$('[data-toggle="popover"]').popover('hide');
-	    }
-	});
-
-
-	$('body').on('click', function (e) {
-	    if(e.toElement.id == 'your_trees'){
-			$('#saved-trees-body').html(savedTreesTemplate(store.getAll()));
-	    	$('#clear-trees').click(function() {
-				store.clear();
-			}); 
-
+	    	}
 	    }
 	});
 
