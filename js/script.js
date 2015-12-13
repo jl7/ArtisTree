@@ -131,6 +131,8 @@ $(document).ready(function() {
 				if(response.artists.items.length > 0) {
 					var artist = response.artists.items[0];
 					initArtistRoot(artist);
+				} else {
+					$('#tree-heading').text('No data found for given artist name, please check spelling.');
 				}
 			}
 		});
