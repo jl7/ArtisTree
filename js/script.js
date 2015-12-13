@@ -33,23 +33,33 @@ $(document).ready(function() {
 			data: {
 				api_key: ECHO_NEST_API_KEY,
 				results: 15,
-				q: query,
+				q: query
 			},
 			success: function(data) {
 				if(data.response.artists.length > 0) {
 	   				$('.suggest-nav').html(suggestResultsTemplate(data.response));
-	   				var maxIndex = data.response.artists.length;
-					$('.suggest-nav').data('activeIndex', maxIndex);
+	   				resetActiveIndex(true);
 	   				$('.suggest-result').hover(function() {
+	   					var activeIndex = $('.suggest-nav').data('activeIndex');
+						var maxIndex = $('.suggest-nav').children('li').length;
+						if(activeIndex < maxIndex) {
+							$('.suggest-nav').children('li').eq(activeIndex).css('background-color', 'white');
+						}
 	   					$(this).css('background-color', 'rgba(0,120,0, .2)');
 	   					$('.suggest-nav').data('activeIndex', $(this).index());
 	   				}, function() {
-	   					$(this).css('background-color', 'white');
-	   					$('.suggest-nav').data('activeIndex', maxIndex);
+	   					var activeIndex = $('.suggest-nav').data('activeIndex');
+	   					if(activeIndex === $(this).index()) {
+	   						var maxIndex = $('.suggest-nav').children('li').length;
+	   						$(this).css('background-color', 'white');
+	   						$('.suggest-nav').data('activeIndex', maxIndex);
+	   					}
 	   				});
 					$('.suggest-result').click(function() {
 						var searchName = $(this).text();
 						$('#search-artist').val(searchName);
+						$('.suggest-nav').html('');
+						resetActiveIndex(true);
 						$('.suggest-nav').hide();
 						$('#home-page').hide();
 						$('#tree-page').show();
@@ -57,64 +67,10 @@ $(document).ready(function() {
 						$('#rightpane').show();
 						searchForArtist(searchName);
 					});
-					$('#search-artist').keydown(function(event) {
-						if(event.which === 40) {
-							var activeIndex = $('.suggest-nav').data('activeIndex');
-							var $suggestions = $('.suggest-nav').children('li');
-							if(activeIndex === maxIndex) {
-								activeIndex = (activeIndex + 1) % (maxIndex + 1);
-								$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
-								$('.suggest-nav').data('activeIndex', activeIndex);
-							}
-							else {
-								$suggestions.eq(activeIndex).css('background-color', 'white');
-								activeIndex = (activeIndex + 1) % (maxIndex + 1);
-								if(activeIndex !== maxIndex) {
-									$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
-								}
-								$('.suggest-nav').data('activeIndex', activeIndex);
-							}
-						}
-						if(event.which === 38) {
-							var activeIndex = $('.suggest-nav').data('activeIndex');
-							var $suggestions = $('.suggest-nav').children('li');
-							if(activeIndex === maxIndex) {
-								activeIndex = (activeIndex - 1) % (maxIndex + 1);
-								$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
-								$('.suggest-nav').data('activeIndex', activeIndex);
-							}
-							else {
-								$suggestions.eq(activeIndex).css('background-color', 'white');
-								activeIndex = (activeIndex - 1) % (maxIndex + 1);
-								if(activeIndex !== maxIndex) {
-									$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
-								}
-								$('.suggest-nav').data('activeIndex', activeIndex);
-							}
-						}
-						if(event.which === 13) {
-							var activeIndex = $('.suggest-nav').data('activeIndex');
-							if(activeIndex !== maxIndex) {
-								var searchName = $('.suggest-nav').children('li').eq(activeIndex).text();
-								$('#search-artist').val(searchName);
-								$('.suggest-nav').hide();
-								$('#home-page').hide();
-								$('#tree-page').show();
-								$('#change').hide();
-								$('#rightpane').show();
-								searchForArtist(searchName);
-							}
-						}
-					});
-					$('#search-artist').focusout(function() {
-						var activeIndex = $('.suggest-nav').data('activeIndex');
-						if(activeIndex !== maxIndex) {
-							$('.suggest-nav').children('li').eq(activeIndex).css('background-color', 'white');
-							$('.suggest-nav').data('activeIndex', maxIndex);
-						}
-					});
 	   				$('.suggest-nav').show();
    				} else {
+					$('.suggest-nav').html('');
+					resetActiveIndex(true);
    					$('.suggest-nav').hide();
    				}
    			}
@@ -126,22 +82,26 @@ $(document).ready(function() {
 			url: 'http://developer.echonest.com/api/v4/artist/similar',
 			data: {
 				api_key: ECHO_NEST_API_KEY,
-				id: 'spotify:artist:'+node.artist.id,
+				id: node.artist.uri,
 				results: 100,
 				bucket: ['hotttnesss_rank','id:spotify'],
 				limit: true
 			},
 			traditional: true,
 			success: function(data) {
-				data.response.artists.sort(function (a, b) {
-                    return a.hotttnesss_rank-b.hotttnesss_rank;
-                });
-                data.response.artists = data.response.artists.filter(function (artist) {
-                    return exploredArtistIds.indexOf(artist.foreign_ids[0].foreign_id.slice(15)) === -1;
-                });
-                var similarArtists = data.response.artists.slice(0, CHILD_LIMIT);
-                for(var i=0, l=similarArtists.length; i<l; i++) {
-					getArtistAndSetChild(node, similarArtists[i].foreign_ids[0].foreign_id.slice(15));
+				if(data.response.artists) {
+					if(data.response.artists.length > 0) {
+						data.response.artists.sort(function (a, b) {
+		                    return a.hotttnesss_rank-b.hotttnesss_rank;
+		                });
+		                data.response.artists = data.response.artists.filter(function (artist) {
+		                    return exploredArtistIds.indexOf(artist.foreign_ids[0].foreign_id.slice(15)) === -1;
+		                });
+		                var similarArtists = data.response.artists.slice(0, CHILD_LIMIT);
+		                for(var i=0, l=similarArtists.length; i<l; i++) {
+							getArtistAndSetChild(node, similarArtists[i].foreign_ids[0].foreign_id.slice(15));
+						}
+					}
 				}
 			}
 		});
@@ -152,7 +112,7 @@ $(document).ready(function() {
 			url: 'https://api.spotify.com/v1/artists/'+artistId,
 			success: function(response) {
 				var name = response.name;
-				$('#'+index).find('img').attr('src', response.images[2].url);
+				$('#'+index).find('img').attr('src', getImage(response.images));
 				$('#'+index).find('img').attr('alt', name);	
 				$('#'+index).find('h3').text(name);
 				$('#'+index).find('a').data('artist', response);
@@ -168,20 +128,22 @@ $(document).ready(function() {
 				type: 'artist'
 			},
 			success: function(response) {
-				var artist = response.artists.items[0];
-				initArtistRoot(artist);
+				if(response.artists.items.length > 0) {
+					var artist = response.artists.items[0];
+					initArtistRoot(artist);
+				}
 			}
 		});
 	};
 
-	var getTopTracksForArtist = function (artistName, artistId, artistImage) {
+	var getTopTracksForArtist = function (artist) {
 		$.ajax({
-			url : 'https://api.spotify.com/v1/artists/'+artistId+'/top-tracks',
+			url : 'https://api.spotify.com/v1/artists/'+artist.id+'/top-tracks',
 			data: {
 				country: 'US'
 			},
 			success: function(response) {
-				$('#rightpane').html(spotifyPlayTemplate({name: artistName, url: artistImage, tracks: response.tracks}));
+				$('#rightpane').html(spotifyPlayTemplate({name: artist.name, url: getImage(artist.images), tracks: response.tracks}));
 			}
 		});
 	};
@@ -205,7 +167,29 @@ $(document).ready(function() {
     var initDataRoot = function (dataKey) {
         d3Tree.setRootData(store.get(dataKey));
         var artist = store.get(dataKey).artist;
-        getTopTracksForArtist(artist.name, artist.id, artist.images[2].url);
+        getTopTracksForArtist(artist);
+    };
+
+	var resetActiveIndex = function(suggestionsChanged) {
+		var activeIndex = $('.suggest-nav').data('activeIndex');
+		var maxIndex = $('.suggest-nav').children('li').length;
+		if(!suggestionsChanged) {
+			if(activeIndex < maxIndex) {
+				$('.suggest-nav').children('li').eq(activeIndex).css('background-color', 'white');
+			}
+		}
+		$('.suggest-nav').data('activeIndex', maxIndex);
+	};
+
+	var getImage = function(images) {
+		var length = images.length;
+        if(length === 0) {
+            return 'img/spotify.jpeg';
+        }
+        if(length > 1) {
+            return images[length - 2].url;
+        }
+        return images[length - 1].url;
     };
 
 	var init = function() {
@@ -239,7 +223,58 @@ $(document).ready(function() {
 		if(input) {
 			suggestArtists(input);
 		} else {
+			$('.suggest-nav').html('');
+			resetActiveIndex(true);
 			$('.suggest-nav').hide();
+		}
+	});
+
+	$('#search-artist').keydown(function(event) {
+		if(event.which === 40) {
+			var activeIndex = $('.suggest-nav').data('activeIndex');
+			var $suggestions = $('.suggest-nav').children('li');
+			var maxIndex = $suggestions.length;
+			if(activeIndex < maxIndex) {
+				$suggestions.eq(activeIndex).css('background-color', 'white');
+			}	
+			activeIndex = (activeIndex + 1) % (maxIndex + 1);
+			if(activeIndex !== maxIndex) {
+				$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
+			}
+			$('.suggest-nav').data('activeIndex', activeIndex);
+		}
+		if(event.which === 38) {
+			var activeIndex = $('.suggest-nav').data('activeIndex');
+			var $suggestions = $('.suggest-nav').children('li');
+			var maxIndex = $suggestions.length;
+			if(activeIndex < maxIndex) {
+				$suggestions.eq(activeIndex).css('background-color', 'white');
+			}
+			activeIndex = activeIndex - 1;
+			if(activeIndex < 0) {
+				activeIndex = maxIndex + 1 + activeIndex;
+			}
+			if(activeIndex !== maxIndex) {
+				$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
+			}
+			$('.suggest-nav').data('activeIndex', activeIndex);
+		}
+		if(event.which === 13) {
+			var activeIndex = $('.suggest-nav').data('activeIndex');
+			var $suggestions = $('.suggest-nav').children('li');
+			var maxIndex = $suggestions.length;
+			if(activeIndex < maxIndex) {
+				var searchName = $('.suggest-nav').children('li').eq(activeIndex).text();
+				$('#search-artist').val(searchName);
+				$('.suggest-nav').html('');
+				resetActiveIndex(true);
+				$('.suggest-nav').hide();
+				$('#home-page').hide();
+				$('#tree-page').show();
+				$('#change').hide();
+				$('#rightpane').show();
+				searchForArtist(searchName);
+			}
 		}
 	});
 
@@ -341,6 +376,7 @@ $(document).ready(function() {
 
 	window.AT = {
 		getSimilarArtistsForNode: getSimilarArtistsForNode,
-		getTopTracksForArtist: getTopTracksForArtist
+		getTopTracksForArtist: getTopTracksForArtist,
+		getImage: getImage
 	};
 }); //end of $(document).ready()

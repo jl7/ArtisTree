@@ -146,7 +146,7 @@ $(document).ready(function() {
         d = toggleChildren(d);
         if(lastClickedArtist !== d) {
             lastClickedArtist = d;
-            AT.getTopTracksForArtist(d.artist.name, d.artist.id, d.artist.images[2].url);
+            AT.getTopTracksForArtist(d.artist);
         }
     }
 
@@ -205,18 +205,14 @@ $(document).ready(function() {
 
         nodeEnter.append('image')
             .attr('xlink:href', function(d) {
-                if(d.artist.images[2]) {
-                    return d.artist.images[2].url;
-                } else {
-                    return 'img/spotify.jpeg';
-                }
+                return AT.getImage(d.artist.images);
             })
             .attr('x', '-32px')
             .attr('y', '-32px')
             .attr('clip-path', 'url(#clipCircle' + clipPathId + ')')
             .attr('width',
               function(d) {
-                  var image = d.artist.images[2];
+                  var image = d.artist.images[d.artist.images.length-2];
                   if(!image) {
                     return 64;
                   }
@@ -228,7 +224,7 @@ $(document).ready(function() {
               })
             .attr('height',
               function(d) {
-                  var image = d.artist.images[2];
+                  var image = d.artist.images[d.artist.images.length-2];
                   if(!image) {
                     return 64;
                   }
