@@ -36,10 +36,17 @@ $(document).ready(function() {
 				q: query,
 			},
 			success: function(data) {
-				console.log(data.response);
 				if(data.response.artists.length > 0) {
 	   				$('.suggest-nav').html(suggestResultsTemplate(data.response));
-	   				//use name from search dropdown to reset text value on input
+	   				var maxIndex = data.response.artists.length;
+					$('.suggest-nav').data('activeIndex', maxIndex);
+	   				$('.suggest-result').hover(function() {
+	   					$(this).css('background-color', 'rgba(0,120,0, .2)');
+	   					$('.suggest-nav').data('activeIndex', $(this).index());
+	   				}, function() {
+	   					$(this).css('background-color', 'white');
+	   					$('.suggest-nav').data('activeIndex', maxIndex);
+	   				});
 					$('.suggest-result').click(function() {
 						var searchName = $(this).text();
 						$('#search-artist').val(searchName);
@@ -49,6 +56,62 @@ $(document).ready(function() {
 						$('#change').hide();
 						$('#rightpane').show();
 						searchForArtist(searchName);
+					});
+					$('#search-artist').keydown(function(event) {
+						if(event.which === 40) {
+							var activeIndex = $('.suggest-nav').data('activeIndex');
+							var $suggestions = $('.suggest-nav').children('li');
+							if(activeIndex === maxIndex) {
+								activeIndex = (activeIndex + 1) % (maxIndex + 1);
+								$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
+								$('.suggest-nav').data('activeIndex', activeIndex);
+							}
+							else {
+								$suggestions.eq(activeIndex).css('background-color', 'white');
+								activeIndex = (activeIndex + 1) % (maxIndex + 1);
+								if(activeIndex !== maxIndex) {
+									$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
+								}
+								$('.suggest-nav').data('activeIndex', activeIndex);
+							}
+						}
+						if(event.which === 38) {
+							var activeIndex = $('.suggest-nav').data('activeIndex');
+							var $suggestions = $('.suggest-nav').children('li');
+							if(activeIndex === maxIndex) {
+								activeIndex = (activeIndex - 1) % (maxIndex + 1);
+								$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
+								$('.suggest-nav').data('activeIndex', activeIndex);
+							}
+							else {
+								$suggestions.eq(activeIndex).css('background-color', 'white');
+								activeIndex = (activeIndex - 1) % (maxIndex + 1);
+								if(activeIndex !== maxIndex) {
+									$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
+								}
+								$('.suggest-nav').data('activeIndex', activeIndex);
+							}
+						}
+						if(event.which === 13) {
+							var activeIndex = $('.suggest-nav').data('activeIndex');
+							if(activeIndex !== maxIndex) {
+								var searchName = $('.suggest-nav').children('li').eq(activeIndex).text();
+								$('#search-artist').val(searchName);
+								$('.suggest-nav').hide();
+								$('#home-page').hide();
+								$('#tree-page').show();
+								$('#change').hide();
+								$('#rightpane').show();
+								searchForArtist(searchName);
+							}
+						}
+					});
+					$('#search-artist').focusout(function() {
+						var activeIndex = $('.suggest-nav').data('activeIndex');
+						if(activeIndex !== maxIndex) {
+							$('.suggest-nav').children('li').eq(activeIndex).css('background-color', 'white');
+							$('.suggest-nav').data('activeIndex', maxIndex);
+						}
 					});
 	   				$('.suggest-nav').show();
    				} else {

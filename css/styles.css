@@ -34,10 +34,6 @@
 	cursor: pointer;
 }
 
-.suggest-holder li:hover, li.active {
-	background: rgba(0,120,0, .2);
-}
-
 .suggest-result {
 	font-weight: bold;
 }

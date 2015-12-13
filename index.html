@@ -81,7 +81,7 @@
 		<div class="row">
 			<div class="center-div">
 				<div class="dropdown suggest-holder">
-					<input type="text" class="form-control" id="search-artist" placeholder="Search for an Artist" data-toggle="popover" data-content="Type and search for an artist" data-placement="top">
+					<input type="text" class="form-control" id="search-artist" placeholder="Search for an Artist" data-toggle="popover" data-content="Type and search for an artist" data-placement="top" autocomplete="off">
 					<ul class="dropdown-menu suggest-nav col-md-12"></ul>
 				</div>
 			</div>
@@ -223,7 +223,7 @@
 	</script>
 
 	<script id="saved-trees-template" type="text/x-handlebars-template">
-		<ul>
+		<ul style="list-style: none;">
 			{{#each this}}
 			<li class="saved-tree"><a href="#">{{@key}}</a></li>
 			{{/each}}
