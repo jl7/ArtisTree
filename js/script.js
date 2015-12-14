@@ -61,11 +61,10 @@ $(document).ready(function() {
 						$('.suggest-nav').html('');
 						resetActiveIndex(true);
 						$('.suggest-nav').hide();
+						searchForArtist(searchName);
 						$('#home-page').hide();
 						$('#tree-page').show();
 						$('#change').hide();
-						$('#rightpane').show();
-						searchForArtist(searchName);
 					});
 	   				$('.suggest-nav').show();
    				} else {
@@ -122,7 +121,7 @@ $(document).ready(function() {
 
 	var searchForArtist = function (artistName) {
 		$.ajax({
-			url : 'https://api.spotify.com/v1/search',
+			url: 'https://api.spotify.com/v1/search',
 			data: {
 				q: artistName,
 				type: 'artist'
@@ -131,8 +130,15 @@ $(document).ready(function() {
 				if(response.artists.items.length > 0) {
 					var artist = response.artists.items[0];
 					initArtistRoot(artist);
+					$('#tree-heading').text('');
+					$('#tree-view').show();
+					$('#save').show();
+					$('#rightpane').show();
 				} else {
 					$('#tree-heading').text('No data found for given artist name, please check spelling.');
+					$('#tree-view').hide();
+					$('#save').hide();
+					$('#rightpane').hide();
 				}
 			}
 		});
@@ -140,12 +146,17 @@ $(document).ready(function() {
 
 	var getTopTracksForArtist = function (artist) {
 		$.ajax({
-			url : 'https://api.spotify.com/v1/artists/'+artist.id+'/top-tracks',
+			url: 'https://api.spotify.com/v1/artists/'+artist.id+'/top-tracks',
 			data: {
 				country: 'US'
 			},
 			success: function(response) {
-				$('#rightpane').html(spotifyPlayTemplate({name: artist.name, url: getImage(artist.images), tracks: response.tracks}));
+				var imageUrl = getImage(artist.images);
+				if(imageUrl === 'img/spotify.jpeg') {
+					$('#rightpane').html(spotifyPlayTemplate({name: artist.name, tracks: response.tracks}));
+				} else {
+					$('#rightpane').html(spotifyPlayTemplate({name: artist.name, url: imageUrl, tracks: response.tracks}));
+				}
 			}
 		});
 	};
@@ -213,11 +224,11 @@ $(document).ready(function() {
 	});
 
 	$('.thumbnail a').click(function() {
+		initArtistRoot($(this).data('artist'));
 		$('#home-page').hide();
 		$('#tree-page').show();
 		$('#change').hide();
 		$('#rightpane').show();
-		initArtistRoot($(this).data('artist'));
 	});
 
 	$('#search-artist').on('input', function() {
@@ -271,11 +282,10 @@ $(document).ready(function() {
 				$('.suggest-nav').html('');
 				resetActiveIndex(true);
 				$('.suggest-nav').hide();
+				searchForArtist(searchName);
 				$('#home-page').hide();
 				$('#tree-page').show();
 				$('#change').hide();
-				$('#rightpane').show();
-				searchForArtist(searchName);
 			}
 		}
 	});
@@ -320,7 +330,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#delete').click(function() {
+	$('#delete-tree').click(function() {
 		store.remove($('#tree-heading').text());
 	});
 
@@ -345,12 +355,14 @@ $(document).ready(function() {
 			$('#saved-trees-body').html(savedTreesTemplate(store.getAll()));
 			$('.saved-tree').click(function() {
 				var treeName = $(this).text();
+				initDataRoot(treeName);
 				$('#home-page').hide();
 				$('#tree-page').show();
-				$('#change').show();
 				$('#tree-heading').text(treeName);
+				$('#tree-view').show();
+				$('#save').show();
+				$('#change').show();
 				$('#rightpane').show();
-				initDataRoot(treeName);
 				$('#saved-trees-modal').modal('hide');
 			});
 		}

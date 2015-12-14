@@ -83,18 +83,6 @@
   background-color:#FFFFFF;
 }
 
-#main {
-  overflow: hidden;
-  height: auto;
-  background-color: #f6f6f6;
-}
-
-#left {
-  float: none;
-  width: auto;
-  overflow: hidden;
-}
-
 .popup {
   width: 100%;
   height: 100%;
@@ -120,4 +108,21 @@
   background: #1ed760;
   color: white;
   cursor: pointer;
+}
+
+#main {
+  overflow: hidden;
+  height: auto;
+  background-color: #f6f6f6;
+}
+
+#left {
+  float: none;
+  width: auto;
+  overflow: hidden;
+}
+
+#tree-view {
+  border-top: 1px solid #2ebd59;
+  border-bottom: 1px solid #2ebd59;
 }
