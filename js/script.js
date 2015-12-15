@@ -341,9 +341,9 @@ $(document).ready(function() {
 		$alert.fadeOut('slow');
 	});
 
-	$('#clear-trees').click(function() {
+	$('#delete-trees').click(function() {
 		store.clear();
-		$('#saved-trees-modal').modal('hide');
+		$('#saved-trees-modal').modal('show');
 	});
 
 	$('#saved-trees-modal').on('show.bs.modal', function() {
