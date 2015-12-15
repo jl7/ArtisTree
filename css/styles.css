@@ -11,14 +11,16 @@
 
 .center-div {
   margin: 0 auto;
-  width: 400px; 
+  width: 500px; 
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .suggest-holder {
 }
 
 .suggest-holder input {
-	border: 1px solid rgba(0,120,0,.6);
+	border: 3px solid rgba(0,120,0,.6);
 }
 
 .suggest-holder ul {
@@ -131,4 +133,7 @@
 }
 #help-instruction{
   padding:10px;
+}
+.page-header {
+  margin-bottom: 0px;
 }
