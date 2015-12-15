@@ -1,12 +1,5 @@
-.brand {
-	font-size: 20px;
-	font-weight: 500;
-	padding-top: 5px;
-  cursor: pointer;
-}
-
-.right {
-  background-color: #f6f6f6;
+.page-header {
+  margin-bottom: 0px;
 }
 
 .center-div {
@@ -14,6 +7,17 @@
   width: 500px; 
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.form-control {
+  border-radius: 40px;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 500;
+  padding-top: 5px;
+  cursor: pointer;
 }
 
 .suggest-holder {
@@ -129,12 +133,7 @@
   border-top: 1px solid #2ebd59;
   border-bottom: 1px solid #2ebd59;
 }
-.form-control {
-  border-radius: 40px;
-}
+
 #help-instruction{
   padding:10px;
-}
-.page-header {
-  margin-bottom: 0px;
 }
