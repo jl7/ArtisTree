@@ -5,3 +5,5 @@ Save change/delete tree not covered in design doc
 Consistent color scheme
 Group 5?
 Treeview header/footer
+Treeview movable and zoomable not covered
+Additional help docs for tree view?
