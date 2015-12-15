@@ -126,3 +126,6 @@
   border-top: 1px solid #2ebd59;
   border-bottom: 1px solid #2ebd59;
 }
+.form-control {
+  border-radius: 40px;
+}
