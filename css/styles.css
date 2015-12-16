@@ -149,6 +149,8 @@
 #rightThumbnail{
   border-radius: 0px;
   margin-bottom: 0px;
+  border-right: none;
+  border-top: none;
 }
 .ourGreen{
   background-color: #96deac;
