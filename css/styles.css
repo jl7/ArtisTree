@@ -1,6 +1,11 @@
+body {
+  background-color: black;
+}
+
 .page-header {
   margin-top: 0px;
   margin-bottom: 0px;
+  background-color: black;
 }
 
 .center-div {
@@ -57,6 +62,19 @@
 .input-error {
   color: red;
   display: none;
+}
+
+.thumbnail {
+  border-color: #2ebd59;
+  background-color: black;
+}
+
+.caption h3 {
+  color: white;
+}
+
+.highlight-green{
+  background-color: #96deac;
 }
 
 /* d3Tree */
@@ -121,14 +139,19 @@
 #main {
   overflow: hidden;
   height: auto;
-  /*background-color: #f6f6f6;*/
+  background-color: black;
 }
 
 #left {
   float: none;
   width: auto;
   overflow: hidden;
-  border-radius: 0px;
+  border-right: 1px solid #2ebd59;
+  background-color: white;
+}
+
+#rightpane {
+  background-color: black;
 }
 
 #tree-view {
@@ -137,28 +160,21 @@
   height: 80%;
 }
 
-#help-instruction{
-  padding:10px;
+#help-instruction {
+  padding: 10px;
 }
-.page-header {
-  margin-bottom: 0px;
-}
-.thumbnail {
-  border-color: #2ebd59;
-}
-#rightThumbnail{
+
+#right-thumbnail{
   border-radius: 0px;
   margin-bottom: 0px;
   border-right: none;
   border-left: none;
   border-top: none;
+  border-left: none;
 }
-.ourGreen{
-  background-color: #96deac;
-}
+
 #tree-heading{
   background-color: #96deac;
   font-size: 30px;
   padding-left: 10px;
-  color: cadetblue;
 }

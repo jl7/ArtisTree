@@ -218,22 +218,24 @@
 				</div>
 
 				<div id="tree-page">
-					<div class="ourGreen"><span id="tree-heading"></h2></span></div>
-					<div id="tree-view" data-toggle="popover" data-content="Click on a node to expand it for similar artists. Zoom in and out and drag to navigate the view of tree." data-placement="top"></div>
-					<span id="save" data-toggle="modal" data-target="#save-tree-modal">
-	  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save a new tree." data-placement="top">
-	    					Save new tree
-	  					</button>
-					</span>
-					<span id="change">
-						<span id="delete" data-toggle="modal" data-target="#delete-tree-modal">
-							<button class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to delete this tree and return to the homepage." data-placement="bottom">Delete this tree</button>
+					<div class="highlight-green" data-toggle="popover" data-content="Click on a node to expand it for similar artists. Zoom in and out and drag to navigate the view of tree." data-placement="bottom"><span id="tree-heading"></span></div>
+					<div id="tree-view"></div>
+					<div class="highlight-green">
+						<span id="save" data-toggle="modal" data-target="#save-tree-modal">
+		  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save a new tree." data-placement="top">
+		    					Save new tree
+		  					</button>
 						</span>
-	  					<button id="change-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save changes to the currently viewed tree." data-placement="top">
-	    					Save changes to tree
-	  					</button>
-	  					<div class="alert" style="display: none;">Tree changes saved!</div>
-  					</span>
+						<span id="change">
+							<span id="delete" data-toggle="modal" data-target="#delete-tree-modal">
+								<button class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to delete this tree and return to the homepage." data-placement="bottom">Delete this tree</button>
+							</span>
+		  					<button id="change-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save changes to the currently viewed tree." data-placement="top">
+		    					Save changes to tree
+		  					</button>
+		  					<div class="alert" style="display: none;">Tree changes saved!</div>
+	  					</span>
+  					</div>
 				</div>
 	    	</div>
 		</div>
@@ -247,15 +249,15 @@
 
 	<!-- For Handlebars -->
 	<script id="spotify-play-template" type="text/x-handlebars-template">
-		<div class="thumbnail" id="rightThumbnail">
+		<div class="thumbnail" id="right-thumbnail">
 			{{#if url}}
 			<img src="{{url}}" alt="{{name}}">
 			{{/if}}
 			<div class="caption">
-				<h4 class="text-center">{{name}}</h4>
+				<h4 class="text-center" style="color: white;">{{name}}</h4>
 			</div>
 		</div>
-		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{name}} Top Tracks:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="720" frameborder="0" allowtransparency="true"></iframe>
+		<iframe src="https://embed.spotify.com/?uri=spotify:trackset:{{name}} Top Tracks:{{#each tracks}}{{#if @index}},{{this.id}}{{else}}{{this.id}}{{/if}}{{/each}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 	</script>
 
 	<script id="suggest-results-template" type="text/x-handlebars-template">
