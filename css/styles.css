@@ -1,12 +1,6 @@
-.brand {
-	font-size: 20px;
-	font-weight: 500;
-	padding-top: 5px;
-  cursor: pointer;
-}
-
-.right {
-  background-color: #f6f6f6;
+.page-header {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .center-div {
@@ -16,16 +10,27 @@
   margin-bottom: 5px;
 }
 
+.form-control {
+  border-radius: 40px;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 500;
+  padding-top: 5px;
+  cursor: pointer;
+}
+
 .suggest-holder {
 }
 
 .suggest-holder input {
-	border: 3px solid rgba(0,120,0,.6);
+	border: 3px solid #2ebd59;
 }
 
 .suggest-holder ul {
 	display: none;
-	border: 1px solid rgba(0,120,0,.6);
+	border: 1px solid #2ebd59;
 }
 
 .suggest-holder li {
@@ -45,6 +50,7 @@
 }
 
 .alert {
+  color: #2ebd59;
   display: inline;
 }
 
@@ -115,7 +121,7 @@
 #main {
   overflow: hidden;
   height: auto;
-  background-color: #f6f6f6;
+  /*background-color: #f6f6f6;*/
 }
 
 #left {
@@ -128,10 +134,9 @@
 #tree-view {
   border-top: 1px solid #2ebd59;
   border-bottom: 1px solid #2ebd59;
+  height: 80%;
 }
-.form-control {
-  border-radius: 40px;
-}
+
 #help-instruction{
   padding:10px;
 }

@@ -53,7 +53,7 @@
 					<h4 class="modal-title">Delete Tree</h4>
 				</div>
 				<div class="modal-body">
-					<p id="delete-msg">Are you sure you want to delete this tree?</p>
+					<p>Are you sure you want to delete this tree?</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
@@ -74,9 +74,28 @@
 				<div class="modal-body" id="saved-trees-body"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-					<button id="clear-trees" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to clear all saved trees" data-placement="top">
-						Clear all trees
+					<button id="clear-trees" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#delete-all-modal">
+						Delete all trees
 					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<div id="delete-all-modal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Delete All Trees</h4>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure you want to delete all trees?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+					<button id="delete-trees" class="btn btn-primary btn-sm" data-dismiss="modal">Delete All</a>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -93,23 +112,23 @@
 			    		Need help?
 			  		</button>
 				</div>
-				<h3><a href="./index.html" class="brand" data-toggle="popover" data-content="Click here to return to the homepage" data-placement="bottom">ArtisTree</a> <small>Discover Similar Artists</small></h3>
+				<h3><a href="./index.html" class="brand" data-toggle="popover" data-content="Click here to return to the homepage." data-placement="bottom">ArtisTree</a> <small>Discover Similar Artists</small></h3>
 			</div>
 		</div>
 	
 		<div class="row">
 			<div class="center-div">
 				<div class="dropdown suggest-holder">
-					<input type="text" class="form-control" id="search-artist" placeholder="Search for an Artist" data-toggle="popover" data-content="Type and search for an artist" data-placement="top" autocomplete="off">
+					<input type="text" class="form-control" id="search-artist" placeholder="Search for an Artist" data-toggle="popover" data-content="Type and search for an artist." data-placement="top" autocomplete="off">
 					<ul class="dropdown-menu suggest-nav col-md-12"></ul>
 				</div>
 			</div>
 		</div>
-		<div id="main" class="row">
+		<div id="main" class="row panel panel-primary">
 
 			<div id="rightpane" class="right pull-right"></div>
 
-			<div id="left" class="panel panel-primary">
+			<div id="left">
 				<div id="home-page" class="panel-body">
 	    			<h2 style="margin-top: 5px;">Current Top Artists<h2>
 					<div class="row">
@@ -199,18 +218,23 @@
 				</div>
 
 				<div id="tree-page">
+<<<<<<< HEAD
 					<div class="ourGreen"><span id="tree-heading"></h2></span></div>
 					<div id="tree-view"></div>
+=======
+					<h2 id="tree-heading"></h2>
+					<div id="tree-view" data-toggle="popover" data-content="Click on a node to expand it for similar artists. Zoom in and out and drag to navigate the view of tree." data-placement="top"></div>
+>>>>>>> d7edce085e17646ffe7cc34b31800f3bca2c2f63
 					<span id="save" data-toggle="modal" data-target="#save-tree-modal">
-	  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save a new tree" data-placement="top">
+	  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save a new tree." data-placement="top">
 	    					Save new tree
 	  					</button>
 					</span>
 					<span id="change">
 						<span id="delete" data-toggle="modal" data-target="#delete-tree-modal">
-							<button class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to delete this tree and return to the homepage" data-placement="bottom">Delete this tree</button>
+							<button class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to delete this tree and return to the homepage." data-placement="bottom">Delete this tree</button>
 						</span>
-	  					<button id="change-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save changes to the currently viewed tree" data-placement="top">
+	  					<button id="change-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save changes to the currently viewed tree." data-placement="top">
 	    					Save changes to tree
 	  					</button>
 	  					<div class="alert" style="display: none;">Tree changes saved!</div>

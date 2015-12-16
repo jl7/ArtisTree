@@ -17,7 +17,7 @@ $(document).ready(function() {
     var clipPathId = 0;
 
     // size of the diagram
-    var viewerWidth = $(window).width() - rightPaneWidth;
+    var viewerWidth = $('.container').width() - rightPaneWidth;
     var viewerHeight = $(window).height();
 
     var lastExpandedNode;
@@ -46,7 +46,7 @@ $(document).ready(function() {
         .call(zoomListener);
 
     function updateWindow() {
-        viewerWidth = $(window).width() - rightPaneWidth;
+        viewerWidth = $('.container').width() - rightPaneWidth;
         viewerHeight = $(window).height();
         baseSvg.attr('width', viewerWidth).attr('height', viewerHeight);
         if(lastExpandedNode) {
@@ -60,7 +60,7 @@ $(document).ready(function() {
         var scale = zoomListener.scale();
         var x = -source.y0;
         var y = -source.x0;
-        x = x * scale + viewerWidth / 4;
+        x = x * scale + viewerWidth / 3;
         y = y * scale + viewerHeight / 2;
         d3.select('#tree-view g').transition()
             .duration(duration)
