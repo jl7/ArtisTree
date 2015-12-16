@@ -113,7 +113,7 @@
   transform: translate(-50%, -50%);
   box-shadow: 0px 2px 6px rgba(0,0,0,1);
   border-radius: 3px;
-  background: #1ed760;
+  background: #2ebd59;
   color: white;
   cursor: pointer;
 }
@@ -144,7 +144,7 @@
   margin-bottom: 0px;
 }
 .thumbnail {
-  border-color: #1ed760;
+  border-color: #2ebd59;
 }
 #rightThumbnail{
   border-radius: 0px;
