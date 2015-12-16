@@ -69,18 +69,20 @@ $(document).ready(function() {
         zoomListener.translate([x, y]);
     }
 
-    function addChild(node, artist) {
+    function addChildren(node, artists) {
         if(!node.children) {
             node.children = [];
         }
-        node.children.push(
-            {
-                artist: artist,
-                children: null,
-                queried: false
-            }
-        );
-        exploredArtistIds.push(artist.id);
+        for(var i=0, l=artists.length; i<l; i++) {
+            node.children.push(
+                {
+                    artist: artists[i],
+                    children: null,
+                    queried: false
+                }
+            );
+            exploredArtistIds.push(artists[i].id);
+        }
         update(node);
         centerNode(node);
     }
@@ -375,8 +377,8 @@ $(document).ready(function() {
             updateWindow();
         },
 
-        _addChild: function(node, artist) {
-            addChild(node, artist);
+        _addChildren: function(node, artists) {
+            addChildren(node, artists);
         }
     };
 }); //end of $(document).ready()

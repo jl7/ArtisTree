@@ -18,11 +18,14 @@ $(document).ready(function() {
 				bucket: 'id:spotify',
 				limit: true
 			},
+			cache: true,
 			success: function(data) {
 				var topArtists = data.response.artists;
+				var artistIds = [];
 				for(var i=0, l=topArtists.length; i<l; i++) {
-					getArtistData(i, topArtists[i].foreign_ids[0].foreign_id.slice(15));
+					artistIds.push(topArtists[i].foreign_ids[0].foreign_id.slice(15));
 				}
+				getArtistDataForHomepage(artistIds);
 			}
 		});
 	};
@@ -35,6 +38,7 @@ $(document).ready(function() {
 				results: 15,
 				q: query
 			},
+			cache: true,
 			success: function(data) {
 				if(data.response.artists.length > 0) {
 	   				$('.suggest-nav').html(suggestResultsTemplate(data.response));
@@ -87,6 +91,7 @@ $(document).ready(function() {
 				limit: true
 			},
 			traditional: true,
+			cache: true,
 			success: function(data) {
 				if(data.response.artists) {
 					if(data.response.artists.length > 0) {
@@ -97,24 +102,33 @@ $(document).ready(function() {
 		                    return exploredArtistIds.indexOf(artist.foreign_ids[0].foreign_id.slice(15)) === -1;
 		                });
 		                var similarArtists = data.response.artists.slice(0, CHILD_LIMIT);
+		                var artistIds = [];
 		                for(var i=0, l=similarArtists.length; i<l; i++) {
-							getArtistAndSetChild(node, similarArtists[i].foreign_ids[0].foreign_id.slice(15));
+		                	artistIds.push(similarArtists[i].foreign_ids[0].foreign_id.slice(15));
 						}
+						getArtistsAndSetChildren(node, artistIds);
 					}
 				}
 			}
 		});
 	};
 
-	var getArtistData = function (index, artistId) {
+	var getArtistDataForHomepage = function (artistIds) {
 		$.ajax({
-			url: 'https://api.spotify.com/v1/artists/'+artistId,
+			url: 'https://api.spotify.com/v1/artists',
+			data: {
+				ids: convertListToString(artistIds)
+			},
+			cache: true,
 			success: function(response) {
-				var name = response.name;
-				$('#'+index).find('img').attr('src', getImage(response.images));
-				$('#'+index).find('img').attr('alt', name);	
-				$('#'+index).find('h3').text(name);
-				$('#'+index).find('a').data('artist', response);
+				var artists = response.artists;
+				for(var i=0, l=artists.length; i<l; i++) {
+					var artist = artists[i];
+					$('#'+i).find('img').attr('src', getImage(artist.images));
+					$('#'+i).find('img').attr('alt', artist.name);	
+					$('#'+i).find('h3').text(artist.name);
+					$('#'+i).find('a').data('artist', artist);
+				}
 			}
 		});
 	};
@@ -126,6 +140,7 @@ $(document).ready(function() {
 				q: artistName,
 				type: 'artist'
 			},
+			cache: true,
 			success: function(response) {
 				if(response.artists.items.length > 0) {
 					var artist = response.artists.items[0];
@@ -150,6 +165,7 @@ $(document).ready(function() {
 			data: {
 				country: 'US'
 			},
+			cache: true,
 			success: function(response) {
 				var imageUrl = getImage(artist.images);
 				if(imageUrl === 'img/spotify.jpeg') {
@@ -161,15 +177,32 @@ $(document).ready(function() {
 		});
 	};
 
-	var getArtistAndSetChild = function (node, artistId) {
+	var getArtistsAndSetChildren = function (node, artistIds) {
 		$.ajax({
-			url: 'https://api.spotify.com/v1/artists/'+artistId,
+			url: 'https://api.spotify.com/v1/artists',
+			data: {
+				ids: convertListToString(artistIds)
+			},
+			cache: true,
 			success: function(response) {
-				if(response.id) {
-					d3Tree._addChild(node, response);
+				var artists = response.artists;
+				if(artists.length > 0) {
+					d3Tree._addChildren(node, artists);
 				}
 			}
 		});
+	};
+
+	var convertListToString = function(list) {
+		var listString = '';
+		for(var i=0, l=list.length; i<l; i++) {
+			if(i === 0) {
+				listString = listString + list[i];
+			} else {
+				listString = listString + ',' + list[i];
+			}
+		}
+		return listString;
 	};
 
 	var initArtistRoot = function (artist) {
