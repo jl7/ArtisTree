@@ -3,7 +3,6 @@ We used JQuery, store.js, Bootstrap, d3, and Handlebars as external libraries fo
 Login/Spotify app requirement for play button (state in README & User Manual)
 Save change/delete tree not covered in design doc
 Consistent color scheme
-Group 5?
 Treeview header/footer
 Treeview movable and zoomable not covered
 Additional help docs for tree view?

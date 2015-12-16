@@ -1,4 +1,5 @@
 .page-header {
+  margin-top: 0px;
   margin-bottom: 0px;
 }
 
@@ -24,12 +25,12 @@
 }
 
 .suggest-holder input {
-	border: 3px solid rgba(0,120,0,.6);
+	border: 3px solid #2ebd59;
 }
 
 .suggest-holder ul {
 	display: none;
-	border: 1px solid rgba(0,120,0,.6);
+	border: 1px solid #2ebd59;
 }
 
 .suggest-holder li {
@@ -132,6 +133,7 @@
 #tree-view {
   border-top: 1px solid #2ebd59;
   border-bottom: 1px solid #2ebd59;
+  height: 80%;
 }
 
 #help-instruction{

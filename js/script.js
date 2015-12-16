@@ -45,7 +45,7 @@ $(document).ready(function() {
 						if(activeIndex < maxIndex) {
 							$('.suggest-nav').children('li').eq(activeIndex).css('background-color', 'white');
 						}
-	   					$(this).css('background-color', 'rgba(0,120,0, .2)');
+	   					$(this).css('background-color', '#96deac');
 	   					$('.suggest-nav').data('activeIndex', $(this).index());
 	   				}, function() {
 	   					var activeIndex = $('.suggest-nav').data('activeIndex');
@@ -209,7 +209,7 @@ $(document).ready(function() {
 		if(!store.enabled) {
             alert('Local storage is not supported by your browser. To save data and view previously saved data, please disable "Private Mode", or upgrade to a modern browser.');
         }
-		$('#rightpane').height($(window).height());
+		$('#rightpane').height(.8 * $(window).height());
 		$('#rightpane').hide();
 		$('#tree-page').hide();
 		getMostPopularArtists();
@@ -220,7 +220,7 @@ $(document).ready(function() {
 	$(window).resize(function() {
 		d3Tree.resizeOverlay();
         var height = $(window).height();
-        $('#rightpane').height(height);
+        $('#rightpane').height(.8 * height);
 	});
 
 	$('.thumbnail a').click(function() {
@@ -252,7 +252,7 @@ $(document).ready(function() {
 			}	
 			activeIndex = (activeIndex + 1) % (maxIndex + 1);
 			if(activeIndex !== maxIndex) {
-				$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
+				$suggestions.eq(activeIndex).css('background-color', '#96deac');
 			}
 			$('.suggest-nav').data('activeIndex', activeIndex);
 		}
@@ -268,7 +268,7 @@ $(document).ready(function() {
 				activeIndex = maxIndex + 1 + activeIndex;
 			}
 			if(activeIndex !== maxIndex) {
-				$suggestions.eq(activeIndex).css('background-color', 'rgba(0,120,0, .2)');
+				$suggestions.eq(activeIndex).css('background-color', '#96deac');
 			}
 			$('.suggest-nav').data('activeIndex', activeIndex);
 		}
