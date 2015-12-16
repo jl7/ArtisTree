@@ -93,23 +93,37 @@ $(document).ready(function() {
 			traditional: true,
 			cache: true,
 			success: function(data) {
-				if(data.response.artists) {
-					if(data.response.artists.length > 0) {
-						data.response.artists.sort(function (a, b) {
-		                    return a.hotttnesss_rank-b.hotttnesss_rank;
-		                });
-		                data.response.artists = data.response.artists.filter(function (artist) {
-		                    return exploredArtistIds.indexOf(artist.foreign_ids[0].foreign_id.slice(15)) === -1;
-		                });
-		                var similarArtists = data.response.artists.slice(0, CHILD_LIMIT);
-		                var artistIds = [];
-		                for(var i=0, l=similarArtists.length; i<l; i++) {
-		                	artistIds.push(similarArtists[i].foreign_ids[0].foreign_id.slice(15));
+				if(data.response.status.code === 3) {
+					$('#tree-heading').text('Echo Nest API limit has been exceeded. Please wait a minute before expanding more nodes.');
+				} else {
+					if(data.response.artists) {
+						if(data.response.artists.length > 0) {
+							data.response.artists.sort(function (a, b) {
+			                    return a.hotttnesss_rank-b.hotttnesss_rank;
+			                });
+			                data.response.artists = data.response.artists.filter(function (artist) {
+			                    return exploredArtistIds.indexOf(artist.foreign_ids[0].foreign_id.slice(15)) === -1;
+			                });
+			                var similarArtists = data.response.artists.slice(0, CHILD_LIMIT);
+			                var artistIds = [];
+			                for(var i=0, l=similarArtists.length; i<l; i++) {
+			                	artistIds.push(similarArtists[i].foreign_ids[0].foreign_id.slice(15));
+							}
+							getArtistsAndSetChildren(node, artistIds);
 						}
-						getArtistsAndSetChildren(node, artistIds);
 					}
 				}
-			}
+			},
+			statusCode: {
+		        429: function(xhr) {
+        			var retryAfter = xhr.getResponseHeader('Retry-After');
+        			retryAfter = parseInt(retryAfter, 10);
+        			if (!retryAfter) {
+        				retryAfter = 5;
+        			}
+		            $('#tree-heading').text('You are trying to expand too many nodes at once. Please wait '+retryAfter+' seconds before expanding more nodes (slowly).');
+		        }
+		    }
 		});
 	};
 
