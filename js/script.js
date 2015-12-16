@@ -38,7 +38,7 @@ $(document).ready(function() {
 			success: function(data) {
 				if(data.response.artists.length > 0) {
 	   				$('.suggest-nav').html(suggestResultsTemplate(data.response));
-	   				resetActiveIndex(true);
+	   				resetActiveIndex();
 	   				$('.suggest-result').hover(function() {
 	   					var activeIndex = $('.suggest-nav').data('activeIndex');
 						var maxIndex = $('.suggest-nav').children('li').length;
@@ -59,7 +59,7 @@ $(document).ready(function() {
 						var searchName = $(this).text();
 						$('#search-artist').val(searchName);
 						$('.suggest-nav').html('');
-						resetActiveIndex(true);
+						resetActiveIndex();
 						$('.suggest-nav').hide();
 						searchForArtist(searchName);
 						$('#home-page').hide();
@@ -69,7 +69,7 @@ $(document).ready(function() {
 	   				$('.suggest-nav').show();
    				} else {
 					$('.suggest-nav').html('');
-					resetActiveIndex(true);
+					resetActiveIndex();
    					$('.suggest-nav').hide();
    				}
    			}
@@ -183,14 +183,8 @@ $(document).ready(function() {
         getTopTracksForArtist(artist);
     };
 
-	var resetActiveIndex = function(suggestionsChanged) {
-		var activeIndex = $('.suggest-nav').data('activeIndex');
+	var resetActiveIndex = function() {
 		var maxIndex = $('.suggest-nav').children('li').length;
-		if(!suggestionsChanged) {
-			if(activeIndex < maxIndex) {
-				$('.suggest-nav').children('li').eq(activeIndex).css('background-color', 'white');
-			}
-		}
 		$('.suggest-nav').data('activeIndex', maxIndex);
 	};
 
@@ -209,7 +203,7 @@ $(document).ready(function() {
 		if(!store.enabled) {
             alert('Local storage is not supported by your browser. To save data and view previously saved data, please disable "Private Mode", or upgrade to a modern browser.');
         }
-		$('#rightpane').height(.8 * $(window).height());
+		$('#rightpane').height(0.8 * $(window).height());
 		$('#rightpane').hide();
 		$('#tree-page').hide();
 		getMostPopularArtists();
@@ -237,7 +231,7 @@ $(document).ready(function() {
 			suggestArtists(input);
 		} else {
 			$('.suggest-nav').html('');
-			resetActiveIndex(true);
+			resetActiveIndex();
 			$('.suggest-nav').hide();
 		}
 	});
@@ -280,7 +274,7 @@ $(document).ready(function() {
 				var searchName = $('.suggest-nav').children('li').eq(activeIndex).text();
 				$('#search-artist').val(searchName);
 				$('.suggest-nav').html('');
-				resetActiveIndex(true);
+				resetActiveIndex();
 				$('.suggest-nav').hide();
 				searchForArtist(searchName);
 				$('#home-page').hide();

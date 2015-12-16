@@ -19,6 +19,15 @@ body {
   border-radius: 40px;
 }
 
+.thumbnail {
+  border-color: #2ebd59;
+  background-color: black;
+}
+
+.caption h3 {
+  color: white;
+}
+
 .brand {
   font-size: 24px;
   font-weight: 500;
@@ -64,15 +73,6 @@ body {
   display: none;
 }
 
-.thumbnail {
-  border-color: #2ebd59;
-  background-color: black;
-}
-
-.caption h3 {
-  color: white;
-}
-
 .highlight-green{
   background-color: #96deac;
 }
@@ -106,8 +106,10 @@ body {
 }
 
 .overlay{
-  background-color:#FFFFFF;
+  background-color:#ffffff;
 }
+
+/* Help Popups */
 
 .popup {
   width: 100%;

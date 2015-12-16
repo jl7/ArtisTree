@@ -91,8 +91,8 @@ $(document).ready(function() {
             artist : artist,
             children: null,
             queried: false
-        }
-    };
+        };
+    }
 
     function initWithData(from, to) {
         if(from.artist) {
@@ -217,7 +217,7 @@ $(document).ready(function() {
                     return 64;
                   }
                   if(image.width > image.height) {
-                      return 64 * (image.width / image.height)
+                      return 64 * (image.width / image.height);
                   } else {
                       return 64;
                   }
@@ -229,7 +229,7 @@ $(document).ready(function() {
                     return 64;
                   }
                   if(image.height > image.width) {
-                      return 64 * (image.height/image.width)
+                      return 64 * (image.height/image.width);
                   } else {
                       return 64;
                   }
@@ -379,5 +379,4 @@ $(document).ready(function() {
             addChild(node, artist);
         }
     };
-});
-
+}); //end of $(document).ready()
