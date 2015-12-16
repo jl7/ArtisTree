@@ -122,6 +122,7 @@
   float: none;
   width: auto;
   overflow: hidden;
+  border-radius: 0px;
 }
 
 #tree-view {
@@ -138,5 +139,19 @@
   margin-bottom: 0px;
 }
 .thumbnail {
+  border-color: #1ed760;
+}
+#rightThumbnail{
+  border-radius: 0px;
   margin-bottom: 0px;
+  border-left: none;
+}
+.ourGreen{
+  background-color: #96deac;
+}
+#tree-heading{
+  background-color: #96deac;
+  font-size: 30px;
+  padding-left: 10px;
+  color: cadetblue;
 }

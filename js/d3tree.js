@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     // size of the diagram
     var viewerWidth = $(window).width() - rightPaneWidth;
-    var viewerHeight = $(window).height() * 0.8;
+    var viewerHeight = $(window).height();
 
     var lastExpandedNode;
 

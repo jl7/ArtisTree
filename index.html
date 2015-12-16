@@ -199,7 +199,7 @@
 				</div>
 
 				<div id="tree-page">
-					<h2 id="tree-heading"></h2>
+					<div class="ourGreen"><span id="tree-heading"></h2></span></div>
 					<div id="tree-view"></div>
 					<span id="save" data-toggle="modal" data-target="#save-tree-modal">
 	  					<button id="save-tree" type="button" class="btn btn-primary btn-sm" data-toggle="popover" data-content="Click here to save a new tree" data-placement="top">
@@ -228,7 +228,7 @@
 
 	<!-- For Handlebars -->
 	<script id="spotify-play-template" type="text/x-handlebars-template">
-		<div class="thumbnail">
+		<div class="thumbnail" id="rightThumbnail">
 			{{#if url}}
 			<img src="{{url}}" alt="{{name}}">
 			{{/if}}
