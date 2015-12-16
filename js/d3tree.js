@@ -47,7 +47,7 @@ $(document).ready(function() {
 
     function updateWindow() {
         viewerWidth = $('.container').width() - rightPaneWidth;
-        viewerHeight = $(window).height() > 550 ? 550 : $(window).height();//$(window).height();
+        viewerHeight = $(window).height() > 550 ? 550 : $(window).height();
         baseSvg.attr('width', viewerWidth).attr('height', viewerHeight);
         if(lastExpandedNode) {
             centerNode(lastExpandedNode);
