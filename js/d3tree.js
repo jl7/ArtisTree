@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     // size of the diagram
     var viewerWidth = $('.container').width() - rightPaneWidth;
-    var viewerHeight = $(window).height();
+    var viewerHeight = $(window).height() > 550 ? 550 : $(window).height();
 
     var lastExpandedNode;
 
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
     function updateWindow() {
         viewerWidth = $('.container').width() - rightPaneWidth;
-        viewerHeight = $(window).height();
+        viewerHeight = $(window).height() > 550 ? 550 : $(window).height();//$(window).height();
         baseSvg.attr('width', viewerWidth).attr('height', viewerHeight);
         if(lastExpandedNode) {
             centerNode(lastExpandedNode);
